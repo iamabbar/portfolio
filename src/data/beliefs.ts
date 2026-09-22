@@ -8,11 +8,6 @@ export type Belief = {
   status?: 'merged' | 'open';
 };
 
-/**
- * Mohamad's own, in his order: design systems, abstraction, complexity, AI,
- * edge cases, maintenance. The `theme` is not rendered — it names what each
- * row is about so the set stays balanced when one is edited.
- */
 export const beliefs: Belief[] = [
   {
     theme: 'Design systems',

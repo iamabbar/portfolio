@@ -1,4 +1,3 @@
-/** "Where I've worked" → "where-ive-worked" — apostrophes drop, not hyphenate. */
 export function slug(label: string): string {
   return label
     .toLowerCase()

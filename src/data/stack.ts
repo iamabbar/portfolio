@@ -3,7 +3,6 @@ export type StackCategory = 'languages' | 'frontend' | 'data' | 'craft';
 export type StackItem = {
   name: string;
   category: StackCategory;
-  /** One line, and an opinion — not a description. */
   opinion: string;
 };
 
@@ -15,11 +14,6 @@ export const categories: Record<StackCategory, { label: string; color: string }>
   craft: { label: 'Craft', color: 'var(--cat-craft)' },
 };
 
-/**
- * Source order is display order. Twelve items fill the 4x3 grid exactly.
- *
- * The tools are from the CV, the opinions are Mohamad's own.
- */
 export const stack: StackItem[] = [
   {
     name: 'TypeScript',

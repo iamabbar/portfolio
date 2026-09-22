@@ -30,18 +30,10 @@ export const site = {
 export const intro = {
   cardTitle: 'Who I am',
   lead: `${site.name} — Frontend Engineer`,
-  // One entry per paragraph — each renders as its own <p>. A "\n" inside a
-  // string will not break the line: HTML collapses every run of whitespace
-  // into a single space.
   paragraphs: [
     'I spend most of my days turning complicated things into interfaces that feel simple.',
-    // The duration is interpolated, not written out, so the bio cannot fall
-    // out of step with the timeline the rest of the page reads.
     `${experienceWords} of frontend have taught me that making things work is only half the job. The other half is making them feel right, from how information is laid out to the tiny details people notice without realizing.`,
   ],
-  /* The stack sits here rather than in the prose: Skills is ~2000px down, so
-     this is the only early signal of what he builds with. No experience pill —
-     the prose already opens with the same derived value. */
   pills: [site.location, site.timezone, 'React · TypeScript'],
   note: {
     label: 'Note to self',

@@ -1,7 +1,3 @@
-/**
- * The career timeline, and every date derived from it — the intro copy,
- * reviewer card and contact status all read their years from here.
- */
 
 export type TimelineEntry = {
   /** 'education' renders the small grey node and a smaller title. */
@@ -18,11 +14,6 @@ export type TimelineEntry = {
   side: 'above' | 'below';
 };
 
-/**
- * Oldest first — the order is load-bearing. Overlapping roles each get their
- * own column plus an employment chip. The wave path is generated from this
- * array's length, so adding or removing an entry needs no other change.
- */
 export const timeline: TimelineEntry[] = [
   {
     kind: 'education',
@@ -33,8 +24,6 @@ export const timeline: TimelineEntry[] = [
     side: 'above',
   },
   {
-    // TODO: confirm the months — the year is inferred from the gap between
-    // graduating and Hovi.
     kind: 'education',
     title: 'Full-stack bootcamp',
     company: 'SE Factory',

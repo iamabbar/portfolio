@@ -24,19 +24,6 @@ export type Project = {
   wouldChange: string;
 };
 
-/**
- * PLACEHOLDER — every string below is lorem ipsum, on purpose.
- *
- * It replaced a fully written mock project, which read as a real claim: a
- * named client, a team size, a row count. Believable filler on a portfolio is
- * a liability, since nothing marks it as invented. Lorem cannot be mistaken
- * for a claim, so it is the safer thing to leave standing until the real work
- * is written.
- *
- * `imageAlt` stays in plain English — screen-reader users should not be
- * handed lorem. light-persona.png and light-field.png are unused until the
- * next two projects land.
- */
 const entries: Omit<Project, 'id'>[] = [
   {
     index: '01',

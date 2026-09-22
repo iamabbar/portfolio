@@ -1,11 +1,6 @@
 import { projects } from './projects';
 import { slug } from './slug';
 
-/**
- * Sidebar labels, and the only place they are written. The anchor id for each
- * is derived from the label, so a URL always names the section it lands on and
- * the two cannot drift apart.
- */
 const LABELS = {
   intro: 'Who I am',
   experience: "Where I've worked",
@@ -35,11 +30,6 @@ export type SectionGroup = {
   links: SectionLink[];
 };
 
-/*
- * One source for the separator titles, the sidebar labels and the scroll-spy
- * order. The order is deliberate — evidence, then credibility, then reference,
- * then character, then the ask. Do not rearrange.
- */
 export const groups: SectionGroup[] = [
   {
     title: 'Intro',
