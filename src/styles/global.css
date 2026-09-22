@@ -1,7 +1,5 @@
 @import './tokens.css';
 
-/* ── Reset / base ───────────────────────────────────────────────────── */
-
 *,
 *::before,
 *::after {
@@ -73,7 +71,6 @@ button {
   border-radius: 4px;
 }
 
-/* Visible only to screen readers. */
 .sr-only {
   position: absolute;
   width: 1px;
@@ -85,8 +82,6 @@ button {
   white-space: nowrap;
   border: 0;
 }
-
-/* ── Keyframes ──────────────────────────────────────────────────────── */
 
 @keyframes revealIn {
   from {
@@ -121,10 +116,8 @@ button {
   }
 }
 
-/* ── Scroll reveal ──────────────────────────────────────────────────── */
 /* Gated on .js (set inline in <head>) so the page stays readable if the
    bundle never loads. */
-
 .js main > section {
   opacity: 0;
 }

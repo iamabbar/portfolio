@@ -16,11 +16,9 @@ export type Project = {
   sourceUrl?: string;
   image: ImageMetadata;
   imageAlt: string;
-  /** Plain-English summary, one <p> each. */
+  /** One <p> each. */
   summary: string[];
-  /** Outcome pills. Keep them concrete. */
   outcomes: string[];
-  /** The comment thread — what the author decided and why. */
   decision: string;
   /** The admission. Rendered unescaped, so keep any HTML to <b> emphasis. */
   wouldChange: string;

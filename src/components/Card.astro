@@ -1,25 +1,14 @@
 ---
-/**
- * The shell every section body sits in. The header strip is optional, and the
- * body is left to the caller — the project card needs a padded region plus an
- * unpadded comment thread.
- */
 interface Props {
   id: string;
-  /** Adds the header strip. Pass the `header` slot instead for rich titles. */
+  /** Pass the `header` slot instead for rich titles. */
   title?: string;
-  /** Right-hand meta text in the header strip. */
   meta?: string;
-  /** Turns the meta into a link. */
   metaHref?: string;
-  /** `muted` is the 4.5:1 label grey; `meta` is the dimmer card-header grey. */
   metaTone?: 'meta' | 'muted';
-  /** The contact card uses a lighter border and no header. */
   variant?: 'default' | 'contact';
   class?: string;
-  /** Adds the lift-on-hover treatment used by the project cards. */
   interactive?: boolean;
-  /** The experience card uses a tighter header strip. */
   compactHeader?: boolean;
 }
 
@@ -72,7 +61,7 @@ const hasHeader = Boolean(title) || Astro.slots.has('header');
     border-color: var(--border-contact);
   }
 
-  /* Hovering anywhere lifts the card; the image reacts from ProjectCard. */
+  /* ProjectCard hangs its image transform off this hover. */
   .card.interactive {
     transition:
       border-color 0.3s ease,

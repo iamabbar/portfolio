@@ -120,7 +120,7 @@ for (let i = 0; i < cols; i++) {
     min-width: 0;
   }
 
-  /* The extra room at the bottom is where the year label now sits. */
+  /* The extra room at the bottom is where the year label sits. */
   .slot.top {
     align-items: flex-end;
     padding: 0 0 12px;
@@ -183,7 +183,6 @@ for (let i = 0; i < cols; i++) {
     background: var(--text-quiet);
   }
 
-  /* Below 720px the track scrolls rather than squashing. */
   @media (max-width: 719px) {
     .track {
       min-width: calc(var(--cols) * 206px);

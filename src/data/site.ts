@@ -1,9 +1,7 @@
 import { experienceWords, reviewingSince } from './career';
 
-/** Identity, contact details, and the copy not tied to a project. */
 export const site = {
   name: 'Mohamad Abbar',
-  /** The header wordmark — lowercase, followed by a violet underscore. */
   wordmark: 'mohamad abbar',
   initials: 'MA',
   role: 'frontend engineer',
@@ -31,7 +29,6 @@ export const site = {
 
 export const intro = {
   cardTitle: 'Who I am',
-  /** Name and role, set above the prose. */
   lead: `${site.name} — Frontend Engineer`,
   // One entry per paragraph — each renders as its own <p>. A "\n" inside a
   // string will not break the line: HTML collapses every run of whitespace

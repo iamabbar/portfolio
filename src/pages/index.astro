@@ -49,7 +49,6 @@ import { site } from '../data/site';
           <h3>Things I used to believe <span class="aside">· and what changed them</span></h3>
         </Fragment>
         <Fragment slot="header-meta">
-          {/* Counts derive from the data — see beliefs.ts. */}
           <p class="counts">
             <span class="count"><StateIcon status="merged" size={14} />{counts.merged} merged</span>
             <span class="count dim"><StateIcon status="open" size={14} />{counts.open} open</span>
@@ -128,7 +127,6 @@ import { site } from '../data/site';
     color: var(--text-quiet);
   }
 
-  /* GitHub's "Open 22 · Closed 2,610" counts strip. */
   .counts {
     display: flex;
     align-items: center;

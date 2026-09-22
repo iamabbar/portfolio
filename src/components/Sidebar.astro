@@ -10,7 +10,6 @@ import { reviewer } from '../data/site';
     {
       groups.map((group) => (
         <>
-          {/* A single item gets no label, unless it is numbered. */}
           {(group.links.length > 1 || group.links.some((l) => l.index)) && (
             <div class="group">{group.title}</div>
           )}
@@ -48,7 +47,6 @@ import { reviewer } from '../data/site';
        content, so the dividing rule is drawn by .shell::before instead. */
   }
 
-  /* Hidden below 860px; every section is still reachable by scrolling. */
   @media (max-width: 859px) {
     aside {
       display: none;

@@ -1,13 +1,7 @@
 ---
-/**
- * merged — a git-merge glyph, violet, because merged is purple on GitHub.
- * open   — an unresolved question, so an issue's ring-and-dot, green.
- *
- * Geometry is hand-authored, so nothing depends on a vendored icon set.
- */
+/* Hand-authored geometry, so nothing depends on a vendored icon set. */
 interface Props {
   status: 'merged' | 'open';
-  /** Rendered size in px. */
   size?: number;
   class?: string;
 }

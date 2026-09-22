@@ -4,33 +4,24 @@
  */
 
 :root {
-  /* ── Surfaces ─────────────────────────────────────────────────────── */
   --bg: #0d1116;                 /* body and sidebar */
   --bg-header: #03060b;          /* sticky header — darker, so it reads as chrome */
   --surface: #0e1116;            /* section bodies */
   --surface-raised: #12161d;     /* card headers, comment threads, entry cards */
 
-  /* ── Borders ──────────────────────────────────────────────────────── */
-  /* Two weights. Chrome that frames the whole page is the stronger of the
-     two; the cards sitting inside it are a step back. */
+  /* Two weights: chrome that frames the whole page, then the cards inside it. */
   --border-strong: #3d444d;      /* rules, pills, image frames, app-shell edges */
   --border: #30353e;             /* section card borders */
   --border-contact: #30353e;     /* contact card + secondary links */
   --border-subtle: #161b22;      /* inner dividers — deliberately quieter */
   --border-hover: #3a2a5e;       /* project card on hover */
 
-  /* ── Text ─────────────────────────────────────────────────────────── */
-  /*
-   * Three colours. They replaced ten separately tuned greys, four of which
-   * sat within 15/255 of each other — differences that read as inconsistency
-   * rather than hierarchy. Rank by role here; get contrast from size and
-   * weight, not from a new shade.
-   */
+  /* Three colours. Rank by role here; get contrast from size and weight,
+     not from a new shade. */
   --text-title: #f0f6fc;         /* section titles, card titles, active nav */
   --text-normal: #eff5fc;        /* prose, pills, anything you read */
   --text-quiet: #90979f;         /* metadata, labels, inactive nav — 6.3:1 */
 
-  /* ── Accents ──────────────────────────────────────────────────────── */
   --violet: #7b3fd4;             /* nodes, avatar, wave, active nav rule */
   --violet-hover: #8748db;       /* lift for violet under white text */
   --violet-light: #b08cf2;       /* indices on dark (contrast-safe) */
@@ -39,11 +30,8 @@
   --amber: #f0a868;              /* "what I'd change" */
   --green: #4ade80;              /* current role, status — never an action */
 
-  /*
-   * Primary action, named by role so the colour is one edit. Violet rather
-   * than the handoff's blue keeps actions distinct from --green, which is
-   * reserved for status. Both clear 4.5:1 under white text.
-   */
+  /* Violet rather than the handoff's blue keeps actions distinct from
+     --green, which is reserved for status. Both clear 4.5:1 under white. */
   --action: var(--violet);
   --action-hover: var(--violet-hover);
 
@@ -54,30 +42,22 @@
   --cat-data: var(--green);
   --cat-craft: var(--amber);
 
-  /* Inline links */
   --link: #7aa2ff;
   --link-hover: #b9ccff;
   --selection: #2a3f7a;
 
-  /* ── Type ─────────────────────────────────────────────────────────── */
   --font-mono: 'JetBrains Mono Variable', ui-monospace, SFMono-Regular, Menlo, monospace;
   --font-serif: 'Newsreader Variable', Georgia, 'Times New Roman', serif;
 
-  /*
-   * The UI ladder. Replaced fifteen sizes, nine of them between 10px and 14px
-   * at 4–5% intervals — steps that close read as the same size.
-   * Add a step here rather than a one-off px in a component.
-   */
+  /* The UI ladder. Add a step here rather than a one-off px in a component. */
   --size-label: 12px;   /* smallest labels, chips, indices, meta */
   --size-meta: 14px;    /* nav, pills, descriptions, secondary UI */
   --size-ui: 16px;      /* card titles and row titles */
 
-  /* Fluid steps, unchanged from the handoff. */
   --size-prose: clamp(15px, 1.35vw, 17.5px);   /* body prose, line-height 1.7 */
   --size-section-title: clamp(20px, 2.2vw, 28px);
   --measure: 62ch;
 
-  /* ── Radius ───────────────────────────────────────────────────────── */
   --r-button: 6px;
   --r-tile: 7px;
   --r-thread: 8px;
@@ -85,12 +65,10 @@
   --r-image: 12px;
   --r-pill: 999px;
 
-  /* ── Shadow ───────────────────────────────────────────────────────── */
   --shadow-image: 0 18px 40px rgb(0 0 0 / 0.45);
   --shadow-card-hover: 0 18px 44px rgb(0 0 0 / 0.5);
   --shadow-image-hover: 0 26px 54px rgb(0 0 0 / 0.55);
 
-  /* ── Spacing (4px base) ───────────────────────────────────────────── */
   --gap-section: clamp(28px, 3vw, 44px);
   --pad-card: clamp(18px, 2.6vw, 30px);
   --pad-card-header-y: 16px;
@@ -98,8 +76,6 @@
   --pad-shell-x: clamp(18px, 3vw, 38px);
   --pad-shell-y: clamp(11px, 1.4vw, 15px);
   --gap-separator: clamp(14px, 1.6vw, 22px);
-
-  /* ── Layout ───────────────────────────────────────────────────────── */
 
   /*
    * Derived: padding + button + the 1px border. Must stay exact — the sticky
@@ -118,14 +94,12 @@
   --main-pad-x-max: 34px;
   --main-pad-x: clamp(12px, 3vw, var(--main-pad-x-max));
 
-  /* Card column cap — a deliberate change from the handoff's 1342px. */
   --content-max: 1200px;
 
   /* Derived so the cap holds: the shell also carries the sidebar and main's
      padding, both at their clamp maxima by the time the shell stops growing. */
   --shell-max: calc(var(--content-max) + 2 * var(--main-pad-x-max) + var(--sidebar-w-max));
 
-  /* ── Motion ───────────────────────────────────────────────────────── */
   --ease: cubic-bezier(0.2, 0.9, 0.25, 1);
 }
 

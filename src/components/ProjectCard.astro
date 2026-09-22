@@ -46,8 +46,6 @@ const { project } = Astro.props;
   </div>
 
   <Thread initials={site.initials} label="The decision" copy={project.decision}>
-    {/* <details> gives the toggle its state, keyboard support and the
-        "display: none when closed" the handoff asks for, with no JS. */}
     <details class="change">
       <summary>
         <span class="when-closed">+ what I'd change now</span>
@@ -139,16 +137,12 @@ const { project } = Astro.props;
     color: var(--text-normal);
   }
 
-  /* The card lifts from Card.astro, which owns the <section>; :global()
-     reaches that element from this component's scope. */
-
+  /* .project is the <section> in Card.astro. */
   :global(.project:hover) .shot,
   :global(.project:focus-within) .shot {
     transform: rotate(-1deg) translateX(-20px) scale(1.04);
     box-shadow: var(--shadow-image-hover);
   }
-
-  /* ── "What I'd change now" ──────────────────────────────────────── */
 
   .change summary {
     display: inline-block;
@@ -201,7 +195,6 @@ const { project } = Astro.props;
     color: var(--amber);
   }
 
-  /* Inline emphasis inside `wouldChange`. */
   .panel :global(b) {
     font-weight: inherit;
     color: var(--text-normal);

@@ -1,9 +1,8 @@
 export type Belief = {
   /** What the row is about. Editorial only — not rendered. */
   theme: string;
-  /** The old belief — what this replaced. */
   before: string;
-  /** The current view. Reads as the row's title. */
+  /** Reads as the row's title. */
   after: string;
   /** 'open' renders as an unresolved issue. Defaults to 'merged'. */
   status?: 'merged' | 'open';
@@ -50,7 +49,6 @@ export const beliefs: Belief[] = [
 
 export const statusOf = (belief: Belief) => belief.status ?? 'merged';
 
-/** Drives the counts in the card header — never typed by hand. */
 export const counts = {
   merged: beliefs.filter((b) => statusOf(b) === 'merged').length,
   open: beliefs.filter((b) => statusOf(b) === 'open').length,

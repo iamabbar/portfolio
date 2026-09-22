@@ -8,8 +8,7 @@ const legend = Object.values(categories);
   <ul class="grid">
     {
       stack.map((item) => (
-        /* --dot carries the category colour, so the dot and the hover ring
-           read from one value rather than a per-category rule. */
+        /* --dot feeds both the dot and the hover ring. */
         <li class="tile" style={`--dot: ${categories[item.category].color}`}>
           <p class="name">
             <span class="dot" aria-hidden="true" />
@@ -68,7 +67,6 @@ const legend = Object.values(categories);
       box-shadow 0.25s ease;
   }
 
-  /* On hover the ring picks up the category colour and the tile lifts. */
   .tile:hover {
     transform: translateY(-2px);
     box-shadow:

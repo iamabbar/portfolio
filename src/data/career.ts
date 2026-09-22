@@ -1,7 +1,6 @@
 /**
- * The career timeline, and every date derived from it. The handoff asked for
- * one source: the intro copy, reviewer card and contact status all read their
- * years from the entries below.
+ * The career timeline, and every date derived from it — the intro copy,
+ * reviewer card and contact status all read their years from here.
  */
 
 export type TimelineEntry = {
@@ -77,7 +76,6 @@ export const timeline: TimelineEntry[] = [
 /** Resolved at build time — rebuilding the site keeps every duration current. */
 const thisYear = new Date().getFullYear();
 
-/** First professional year. Education does not count towards experience. */
 export const careerStartYear = Math.min(
   ...timeline.filter((entry) => entry.kind === 'role').map((entry) => entry.from),
 );
@@ -89,12 +87,11 @@ const WORDS = [
   'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve',
 ];
 
-/** "Four" — prose spells durations out; the chip below does not. */
+/** Prose spells durations out; the timeline chips do not. */
 export function spellOut(n: number): string {
   return WORDS[n] ?? String(n);
 }
 
-/** "Five years". */
 export const experienceWords = `${spellOut(yearsOfExperience)} years`;
 
 /** Shown on the reviewer card. */
