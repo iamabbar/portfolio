@@ -28,10 +28,14 @@ function activationLine(section: HTMLElement): number {
 
 const sections = Array.from(document.querySelectorAll<HTMLElement>('main > section[id]'));
 
-if (sections.length > 0) {
-  initScrollSpy(sections);
-  initReveal(sections);
-}
+/* Separators reveal with the card they introduce, so a heading is never on
+   screen above an empty space. */
+const revealTargets = Array.from(
+  document.querySelectorAll<HTMLElement>('main > section[id], main > .separator'),
+);
+
+if (sections.length > 0) initScrollSpy(sections);
+if (revealTargets.length > 0) initReveal(revealTargets);
 
 function initScrollSpy(sections: HTMLElement[]) {
   const links = sections.map((section) =>

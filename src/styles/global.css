@@ -118,11 +118,15 @@ button {
 
 /* Gated on .js (set inline in <head>) so the page stays readable if the
    bundle never loads. */
-.js main > section {
+/* The separator titles are divs, not sections — without them here the
+   headings paint instantly above cards that are still at opacity 0. */
+.js main > section,
+.js main > .separator {
   opacity: 0;
 }
 
-.js main > section.in-view {
+.js main > section.in-view,
+.js main > .separator.in-view {
   animation: fileIn 0.6s var(--ease) both;
 }
 
@@ -135,7 +139,8 @@ button {
     scroll-behavior: auto;
   }
 
-  .js main > section {
+  .js main > section,
+  .js main > .separator {
     opacity: 1;
   }
 
