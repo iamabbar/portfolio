@@ -82,8 +82,8 @@ for (let i = 0; i < cols; i++) {
     display: grid;
     /*
      * The floor is set by the widest line that must not wrap — the company
-     * plus its employment chip, 158px — plus the card's 28px of padding.
-     * Long company names are allowed to wrap; titles and chips are not.
+     * plus its employment chip — plus the card's 28px of padding. Long
+     * company names are allowed to wrap; titles and chips are not.
      */
     grid-template-columns: repeat(var(--cols), minmax(200px, 1fr));
     grid-template-rows: auto 64px auto;

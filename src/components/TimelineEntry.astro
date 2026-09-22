@@ -50,17 +50,19 @@ const { entry } = Astro.props;
     color: var(--text-quiet);
   }
 
+  /* An outline, not a filled badge — it is an aside on the company line,
+     not a second title. 12px is the floor the contrast rule sets. */
   .chip {
     display: inline-block;
-    margin-left: 8px;
-    padding: 3px 8px;
-    border-radius: 4px;
-    background: var(--border-strong);
-    font-size: var(--size-label);
-    letter-spacing: 0.1em;
+    margin-left: 7px;
+    padding: 0 5px;
+    border: 1px solid var(--border-strong);
+    border-radius: 3px;
+    font-size: var(--size-micro);
+    letter-spacing: 0.04em;
     color: var(--text-quiet);
     white-space: nowrap;
-    vertical-align: middle;
+    vertical-align: baseline;
   }
 
   .company {

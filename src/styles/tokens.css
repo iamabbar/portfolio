@@ -1,6 +1,7 @@
 /*
  * Design tokens. No component should contain a raw hex code.
- * Contrast rule: informational text clears 4.5:1 and never goes below 12px.
+ * Contrast rule: informational text clears 4.5:1 and stays at 12px or above.
+ * --size-micro is the one deliberate exception — see it below.
  */
 
 :root {
@@ -50,7 +51,10 @@
   --font-serif: 'Newsreader Variable', Georgia, 'Times New Roman', serif;
 
   /* The UI ladder. Add a step here rather than a one-off px in a component. */
-  --size-label: 12px;   /* smallest labels, chips, indices, meta */
+  /* Below the 12px floor, so it is for the employment chip alone: two words
+     of caps that duplicate nothing — the dates already say the same thing. */
+  --size-micro: 10px;
+  --size-label: 12px;   /* smallest labels, indices, meta */
   --size-meta: 14px;    /* nav, pills, descriptions, secondary UI */
   --size-ui: 16px;      /* card titles and row titles */
 
