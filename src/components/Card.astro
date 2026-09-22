@@ -1,0 +1,128 @@
+---
+/**
+ * The shell every section body sits in. The header strip is optional, and the
+ * body is left to the caller — the project card needs a padded region plus an
+ * unpadded comment thread.
+ */
+interface Props {
+  id: string;
+  /** Adds the header strip. Pass the `header` slot instead for rich titles. */
+  title?: string;
+  /** Right-hand meta text in the header strip. */
+  meta?: string;
+  /** Turns the meta into a link. */
+  metaHref?: string;
+  /** `muted` is the 4.5:1 label grey; `meta` is the dimmer card-header grey. */
+  metaTone?: 'meta' | 'muted';
+  /** The contact card uses a lighter border and no header. */
+  variant?: 'default' | 'contact';
+  class?: string;
+  /** Adds the lift-on-hover treatment used by the project cards. */
+  interactive?: boolean;
+  /** The experience card uses a tighter header strip. */
+  compactHeader?: boolean;
+}
+
+const {
+  id,
+  title,
+  meta,
+  metaHref,
+  metaTone = 'meta',
+  variant = 'default',
+  class: className,
+  interactive = false,
+  compactHeader = false,
+} = Astro.props;
+
+const hasHeader = Boolean(title) || Astro.slots.has('header');
+---
+
+<section id={id} class:list={['card', variant, { interactive }, className]}>
+  {
+    hasHeader && (
+      <div class:list={['card-header', { compact: compactHeader }]}>
+        {Astro.slots.has('header') ? <slot name="header" /> : <h3>{title}</h3>}
+        {
+          meta &&
+            (metaHref ? (
+              <a class="meta" href={metaHref}>
+                {meta}
+              </a>
+            ) : (
+              <span class:list={['meta', { muted: metaTone === 'muted' }]}>{meta}</span>
+            ))
+        }
+        <slot name="header-meta" />
+      </div>
+    )
+  }
+  <slot />
+</section>
+
+<style>
+  .card {
+    overflow: hidden;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r-card);
+  }
+
+  .card.contact {
+    border-color: var(--border-contact);
+  }
+
+  /* Hovering anywhere lifts the card; the image reacts from ProjectCard. */
+  .card.interactive {
+    transition:
+      border-color 0.3s ease,
+      transform 0.3s ease,
+      box-shadow 0.3s ease;
+  }
+
+  .card.interactive:hover,
+  .card.interactive:focus-within {
+    border-color: var(--border-hover);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-card-hover);
+  }
+
+  .card-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: var(--pad-card-header-y) var(--pad-card-header-x);
+    background: var(--surface-raised);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .card-header.compact {
+    padding: 11px 14px;
+  }
+
+  h3 {
+    font-size: var(--size-ui);
+    font-weight: 400;
+    color: var(--text-title);
+  }
+
+  .meta {
+    font-size: var(--size-label);
+    color: var(--text-quiet);
+  }
+
+  .meta.muted {
+    color: var(--text-quiet);
+  }
+
+  a.meta {
+    font-size: var(--size-label);
+    color: var(--link);
+  }
+
+  a.meta:hover {
+    color: var(--link-hover);
+  }
+</style>

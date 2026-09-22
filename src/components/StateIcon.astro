@@ -1,0 +1,63 @@
+---
+/**
+ * merged — a git-merge glyph, violet, because merged is purple on GitHub.
+ * open   — an unresolved question, so an issue's ring-and-dot, green.
+ *
+ * Geometry is hand-authored, so nothing depends on a vendored icon set.
+ */
+interface Props {
+  status: 'merged' | 'open';
+  /** Rendered size in px. */
+  size?: number;
+  class?: string;
+}
+
+const { status, size = 16, class: className } = Astro.props;
+---
+
+<svg
+  class:list={['icon', status, className]}
+  width={size}
+  height={size}
+  viewBox="0 0 16 16"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="1.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  aria-hidden="true"
+  focusable="false"
+>
+  {
+    status === 'merged' ? (
+      <Fragment>
+        <circle cx="4.5" cy="3.25" r="1.75" />
+        <circle cx="4.5" cy="12.75" r="1.75" />
+        <circle cx="11.5" cy="3.25" r="1.75" />
+        <path d="M4.5 5v6" />
+        <path d="M11.5 5v1.5C11.5 8.3 9.9 9.25 8 9.25H4.5" />
+      </Fragment>
+    ) : (
+      <Fragment>
+        <circle cx="8" cy="8" r="6.25" />
+        <circle cx="8" cy="8" r="1.6" fill="currentColor" stroke="none" />
+      </Fragment>
+    )
+  }
+</svg>
+
+<style>
+  .icon {
+    flex: 0 0 auto;
+    display: block;
+  }
+
+  .icon.merged {
+    /* 7.10:1 on the card surface; --violet itself only clears 3.16:1. */
+    color: var(--violet-light);
+  }
+
+  .icon.open {
+    color: var(--green);
+  }
+</style>

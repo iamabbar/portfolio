@@ -1,0 +1,38 @@
+---
+interface Props {
+  title: string;
+  /** The first separator sits flush against the top of <main>. */
+  first?: boolean;
+}
+
+const { title, first = false } = Astro.props;
+---
+
+<div class:list={['separator', { first }]}>
+  <h2>{title}</h2>
+</div>
+
+<style>
+  /*
+   * No rule after the title. It was the only structure in this column back
+   * when card borders were barely visible; now the cards are outlined and a
+   * rule at --border-strong would be brighter than the card it introduces.
+   */
+  .separator {
+    margin: var(--gap-separator) 0 0;
+  }
+
+  .separator.first {
+    margin: 0;
+  }
+
+  h2 {
+    font-family: var(--font-serif);
+    font-size: var(--size-section-title);
+    /* Explicit, so section scroll-margin can be derived from it. */
+    line-height: 1.3;
+    font-weight: 400;
+    color: var(--text-title);
+    white-space: nowrap;
+  }
+</style>

@@ -1,0 +1,192 @@
+---
+import TimelineEntry from './TimelineEntry.astro';
+import { timeline, yearLabel } from '../data/career';
+
+/*
+ * The wave: one cubic per column, alternating between the top and bottom of
+ * the band so it crosses its mid-line at each column's centre. Generated from
+ * the entry count — a hand-written path only ever fits one number of columns.
+ */
+const cols = timeline.length;
+/* Amplitude leaves clearance above the crossing for the year label. */
+const [TOP, BOTTOM] = [14, 50];
+const span = 100 / cols;
+const r = (n: number) => Math.round(n * 1000) / 1000;
+
+let wavePath = `M0 ${TOP}`;
+for (let i = 0; i < cols; i++) {
+  const [from, to] = i % 2 === 0 ? [TOP, BOTTOM] : [BOTTOM, TOP];
+  const x = i * span;
+  wavePath += ` C ${r(x + span / 3)} ${from}, ${r(x + (2 * span) / 3)} ${to}, ${r(x + span)} ${to}`;
+}
+---
+
+<div class="wrap">
+  <div class="track" style={`--cols: ${cols}`}>
+    <div class="wave" aria-hidden="true">
+      <svg viewBox={`0 0 100 64`} preserveAspectRatio="none">
+        <path
+          d={wavePath}
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.4"
+          stroke-opacity="0.9"
+          vector-effect="non-scaling-stroke"
+        />
+      </svg>
+    </div>
+
+    {
+      timeline.map((entry, i) => (
+        /* The explicit grid-column is required: without it the row-2
+           spanning wave forces these into zero-width implicit tracks. */
+        <div class="col" style={`--col: ${i + 1}`}>
+          <div class="slot top">
+            {entry.side === 'above' && (
+              <TimelineEntry entry={entry} />
+            )}
+          </div>
+
+          <div class="node-cell">
+            <span class="year">{yearLabel(entry)}</span>
+            <span
+              class:list={[
+                'node',
+                {
+                  education: entry.kind === 'education',
+                  current: entry.to === 'now',
+                },
+              ]}
+              aria-hidden="true"
+            />
+          </div>
+
+          <div class="slot bottom">
+            {entry.side === 'below' && (
+              <TimelineEntry entry={entry} />
+            )}
+          </div>
+        </div>
+      ))
+    }
+  </div>
+</div>
+
+<style>
+  .wrap {
+    padding: clamp(20px, 2.6vw, 30px) clamp(14px, 2vw, 22px);
+    overflow-x: auto;
+  }
+
+  .track {
+    display: grid;
+    /*
+     * The floor is set by the widest line that must not wrap — the company
+     * plus its employment chip, 158px — plus the card's 28px of padding.
+     * Long company names are allowed to wrap; titles and chips are not.
+     */
+    grid-template-columns: repeat(var(--cols), minmax(200px, 1fr));
+    grid-template-rows: auto 64px auto;
+    column-gap: clamp(10px, 1.4vw, 20px);
+  }
+
+  .wave {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    align-self: center;
+    height: 64px;
+    color: var(--violet);
+    pointer-events: none;
+  }
+
+  .wave svg {
+    display: block;
+    width: 100%;
+    height: 64px;
+  }
+
+  .col {
+    display: grid;
+    grid-template-rows: subgrid;
+    grid-row: 1 / span 3;
+    grid-column: var(--col);
+    min-width: 0;
+    align-items: end;
+  }
+
+  .slot {
+    display: flex;
+    justify-content: center;
+    min-width: 0;
+  }
+
+  /* The extra room at the bottom is where the year label now sits. */
+  .slot.top {
+    align-items: flex-end;
+    padding: 0 0 12px;
+  }
+
+  .slot.bottom {
+    align-items: flex-start;
+    padding: 10px 0 0;
+  }
+
+  .node-cell {
+    position: relative;
+    z-index: 2;
+    grid-row: 2;
+    align-self: center;
+    height: 64px;
+  }
+
+  /*
+   * Clear of the wave, not masking it. At 12px the chip's opaque box sat
+   * inside the wave's swing and cut a visible rectangle out of the curve;
+   * the label has to sit above the highest point the line reaches within
+   * the chip's own width.
+   */
+  .year {
+    position: absolute;
+    left: 50%;
+    bottom: calc(50% + 21px);
+    transform: translateX(-50%);
+    padding: 2px 6px;
+    background: var(--surface);
+    font-size: var(--size-label);
+    letter-spacing: 0.06em;
+    color: var(--text-quiet);
+    white-space: nowrap;
+  }
+
+  /* The ring knocks a hole in the wave. */
+  .node {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background: var(--violet);
+    box-shadow: 0 0 0 5px var(--surface);
+  }
+
+  .node.current {
+    width: 13px;
+    height: 13px;
+    background: var(--green);
+  }
+
+  .node.education {
+    width: 9px;
+    height: 9px;
+    background: var(--text-quiet);
+  }
+
+  /* Below 720px the track scrolls rather than squashing. */
+  @media (max-width: 719px) {
+    .track {
+      min-width: calc(var(--cols) * 206px);
+    }
+  }
+</style>

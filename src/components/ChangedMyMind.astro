@@ -1,0 +1,119 @@
+---
+import StateIcon from './StateIcon.astro';
+import { beliefs, statusOf } from '../data/beliefs';
+
+/** Two-digit index, matching the project cards' numbering. */
+const pad = (n: number) => String(n).padStart(2, '0');
+---
+
+<ul class="list">
+  {
+    beliefs.map((belief, i) => {
+      const status = statusOf(belief);
+      /*
+       * Old belief first, new belief second — the rows read in the order the
+       * change happened. Leading with the new one fought the card's own title
+       * and left every row opening on a pronoun ("It's an agreement…") whose
+       * subject only arrived on the line below.
+       *
+       * <s> carries "no longer accurate" semantically; the visible signal is
+       * the WAS chip, since this text is half of a comparison and has to stay
+       * readable.
+       */
+      return (
+        <li class="row">
+          <StateIcon status={status} />
+          <div class="body">
+            <p class="was">
+              {status === 'merged' ? (
+                <s>{belief.before}</s>
+              ) : (
+                <span class="still">{belief.before}</span>
+              )}
+              <span class="num">#{pad(i + 1)}</span>
+            </p>
+            <p class="now">{belief.after}</p>
+          </div>
+        </li>
+      );
+    })
+  }
+</ul>
+
+<style>
+  .list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .row {
+    display: grid;
+    grid-template-columns: 16px minmax(0, 1fr);
+    gap: 0 12px;
+    align-items: start;
+    padding: 14px clamp(16px, 2.4vw, 26px);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .row:last-child {
+    border-bottom: 0;
+  }
+
+  /* Nudge the icon onto the first line's optical centre. */
+  .row :global(.icon) {
+    margin-top: 0.2em;
+  }
+
+  .body {
+    min-width: 0;
+  }
+
+  /* The superseded belief: mono and quiet, the way a diff shows the old side. */
+  .was {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 4px 9px;
+    font-family: var(--font-mono);
+    font-size: var(--size-meta);
+    line-height: 1.6;
+  }
+
+  /*
+   * The conclusion. Serif, bright, and second — a conclusion needs its
+   * premise first, or it opens on a pronoun with nothing to point at.
+   *
+   * No WAS/NOW chips: "I used to…" above and the present tense here already
+   * say which is which, and the mono/serif split says it again.
+   */
+  .now {
+    margin-top: 8px;
+    font-family: var(--font-serif);
+    font-size: var(--size-ui);
+    line-height: 1.5;
+    color: var(--text-title);
+  }
+
+  /* Trails the old belief, the way GitHub trails a PR number. */
+  .num {
+    margin-left: auto;
+    font-family: var(--font-mono);
+    font-size: var(--size-label);
+    letter-spacing: 0.06em;
+    color: var(--text-quiet);
+    white-space: nowrap;
+  }
+
+  /*
+   * Presentation only — <s> keeps the meaning, the WAS label shows it. The
+   * default strikethrough is dropped so the old belief stays readable.
+   */
+  s {
+    text-decoration: none;
+  }
+
+  s,
+  .still {
+    color: var(--text-quiet);
+  }
+</style>

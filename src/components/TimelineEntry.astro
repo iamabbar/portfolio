@@ -1,0 +1,79 @@
+---
+import type { TimelineEntry } from '../data/career';
+
+interface Props {
+  entry: TimelineEntry;
+}
+
+const { entry } = Astro.props;
+---
+
+<div class:list={['entry', { education: entry.kind === 'education' }]}>
+  {/*
+    The employment chip sits on the company line, not the title. Role titles
+    already fill a timeline column at --size-ui, so a chip beside one always
+    wrapped to a second line.
+  */}
+  <h4>{entry.title}</h4>
+  {entry.company && (
+    <p class="company">
+      {entry.company}
+      {entry.employment && <span class="chip">{entry.employment}</span>}
+    </p>
+  )}
+  {entry.description && <p class="description">{entry.description}</p>}
+</div>
+
+<style>
+  /*
+   * Everything here is one step down the ladder from the rest of the page:
+   * these cards sit in ~210px columns, so page-level sizes crowd them.
+   */
+  .entry {
+    min-width: 0;
+    padding: 14px;
+    background: var(--surface-raised);
+    border: 1px solid var(--border);
+    border-radius: var(--r-card);
+  }
+
+  h4 {
+    margin: 0;
+    font-size: var(--size-meta);
+    font-weight: 400;
+    line-height: 1.35;
+    color: var(--text-title);
+  }
+
+  /* Education entries carry only a title, set smaller and softer. */
+  .entry.education h4 {
+    font-size: var(--size-label);
+    color: var(--text-quiet);
+  }
+
+  .chip {
+    display: inline-block;
+    margin-left: 8px;
+    padding: 3px 8px;
+    border-radius: 4px;
+    background: var(--border-strong);
+    font-size: var(--size-label);
+    letter-spacing: 0.1em;
+    color: var(--text-quiet);
+    white-space: nowrap;
+    vertical-align: middle;
+  }
+
+  .company {
+    margin-top: 4px;
+    font-size: var(--size-label);
+    color: var(--text-quiet);
+  }
+
+  .description {
+    margin-top: 7px;
+    font-size: var(--size-label);
+    line-height: 1.6;
+    color: var(--text-quiet);
+  }
+</style>

@@ -1,0 +1,123 @@
+---
+import { groups } from '../data/sections';
+import { reviewer } from '../data/site';
+---
+
+<aside aria-label="Contents">
+  <div class="heading">CONTENT</div>
+
+  <nav>
+    {
+      groups.map((group) => (
+        <>
+          {/* A single item gets no label, unless it is numbered. */}
+          {(group.links.length > 1 || group.links.some((l) => l.index)) && (
+            <div class="group">{group.title}</div>
+          )}
+          {group.links.map((link) => (
+            <a
+              class:list={['item', { nested: Boolean(link.index) }]}
+              href={`#${link.id}`}
+              data-nav={link.id}
+            >
+              {link.index && <span class="index">{link.index}</span>}
+              {link.label}
+            </a>
+          ))}
+        </>
+      ))
+    }
+  </nav>
+
+  <div class="reviewer">
+    <div class="reviewer-label">{reviewer.label}</div>
+    {reviewer.lines.map((line) => <div>{line}</div>)}
+  </div>
+</aside>
+
+<style>
+  aside {
+    position: sticky;
+    top: var(--header-h);
+    flex: 0 0 var(--sidebar-w);
+    align-self: flex-start;
+    max-height: calc(100vh - var(--header-h));
+    overflow: auto;
+    padding: 20px 12px 40px clamp(10px, 2vw, 26px);
+    /* No border-right: this element is sticky and only as tall as its own
+       content, so the dividing rule is drawn by .shell::before instead. */
+  }
+
+  /* Hidden below 860px; every section is still reachable by scrolling. */
+  @media (max-width: 859px) {
+    aside {
+      display: none;
+    }
+  }
+
+  .heading {
+    padding: 0 8px 10px;
+    font-size: var(--size-label);
+    letter-spacing: 0.16em;
+    color: var(--text-quiet);
+  }
+
+  .group {
+    padding: 14px 10px 4px;
+    font-size: var(--size-label);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-quiet);
+  }
+
+  .item {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    padding: 9px 10px;
+    border-left: 2px solid transparent;
+    border-radius: var(--r-button);
+    font-size: var(--size-meta);
+    white-space: nowrap;
+    color: var(--text-quiet);
+    transition:
+      background 0.2s ease,
+      color 0.2s ease,
+      border-color 0.2s ease;
+  }
+
+  .item:hover {
+    color: var(--text-title);
+  }
+
+  .item.nested {
+    margin-left: 8px;
+  }
+
+  .index {
+    font-size: var(--size-label);
+    color: var(--violet-light);
+  }
+
+  /* Set by the scroll spy. */
+  .item.is-active {
+    color: var(--text-title);
+    background: var(--border-subtle);
+    border-left-color: var(--violet);
+  }
+
+  .reviewer {
+    margin-top: 22px;
+    padding: 12px 10px;
+    border: 1px solid var(--border);
+    border-radius: var(--r-thread);
+    font-size: var(--size-label);
+    line-height: 1.7;
+    color: var(--text-quiet);
+  }
+
+  .reviewer-label {
+    margin-bottom: 6px;
+    color: var(--text-normal);
+  }
+</style>

@@ -1,0 +1,118 @@
+---
+import { categories, stack } from '../data/stack';
+
+const legend = Object.values(categories);
+---
+
+<div class="wrap">
+  <ul class="grid">
+    {
+      stack.map((item) => (
+        /* --dot carries the category colour, so the dot and the hover ring
+           read from one value rather than a per-category rule. */
+        <li class="tile" style={`--dot: ${categories[item.category].color}`}>
+          <p class="name">
+            <span class="dot" aria-hidden="true" />
+            {item.name}
+          </p>
+          <p class="opinion">{item.opinion}</p>
+        </li>
+      ))
+    }
+  </ul>
+
+  <ul class="legend">
+    {
+      legend.map((category) => (
+        <li class="key" style={`--dot: ${category.color}`}>
+          <span class="dot" aria-hidden="true" />
+          {category.label}
+        </li>
+      ))
+    }
+  </ul>
+</div>
+
+<style>
+  .wrap {
+    padding: var(--pad-card);
+  }
+
+  .grid {
+    display: grid;
+    /* 220px holds four columns at the 1200px content cap and never reaches
+       five, then steps down to 3, 2, 1. */
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+  }
+
+  .tile {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-width: 0;
+    padding: 16px 18px 18px;
+    background: var(--surface-raised);
+    border-radius: var(--r-card);
+    /*
+     * A ring rather than a border: Chrome rounds `border-width: 0.5px` up to
+     * a full pixel, while a shadow spread renders a true hairline. Both
+     * states carry two shadows — the elevation one transparent at rest — so
+     * the lists interpolate instead of snapping.
+     */
+    box-shadow:
+      0 0 0 0.5px var(--border),
+      0 12px 26px rgb(0 0 0 / 0);
+    transition:
+      transform 0.25s ease,
+      box-shadow 0.25s ease;
+  }
+
+  /* On hover the ring picks up the category colour and the tile lifts. */
+  .tile:hover {
+    transform: translateY(-2px);
+    box-shadow:
+      0 0 0 0.5px var(--dot),
+      0 12px 26px rgb(0 0 0 / 0.45);
+  }
+
+  .name {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    font-family: var(--font-mono);
+    font-size: var(--size-meta);
+    color: var(--text-title);
+  }
+
+  .dot {
+    flex: 0 0 auto;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--dot);
+  }
+
+  .opinion {
+    font-family: var(--font-serif);
+    font-size: var(--size-ui);
+    line-height: 1.6;
+    color: var(--text-normal);
+  }
+
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 22px;
+    margin-top: 22px;
+  }
+
+  .key {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: var(--size-meta);
+    color: var(--text-quiet);
+  }
+</style>

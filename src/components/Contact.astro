@@ -1,0 +1,101 @@
+---
+import Card from './Card.astro';
+import { ids } from '../data/sections';
+import { contact, site } from '../data/site';
+---
+
+<Card id={ids.contact} variant="contact">
+  <div class="body">
+    <p class="status">
+      <span class="dot" aria-hidden="true"></span>
+      {contact.status}
+    </p>
+
+    <p class="headline">{contact.headline}</p>
+
+    <div class="actions">
+      <a class="primary" href={`mailto:${site.email}`}>{site.email}</a>
+      <a class="secondary" href={site.links.github} rel="me noopener">github ↗</a>
+      <a class="secondary" href={site.links.linkedin} rel="me noopener">linkedin ↗</a>
+    </div>
+
+    <p class="footer">{contact.footer}</p>
+  </div>
+</Card>
+
+<style>
+  .body {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: clamp(16px, 3vw, 30px);
+  }
+
+  .status {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: var(--size-meta);
+    color: var(--green);
+  }
+
+  .dot {
+    flex: 0 0 auto;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--green);
+  }
+
+  .headline {
+    font-family: var(--font-serif);
+    font-size: clamp(22px, 3.4vw, 42px);
+    line-height: 1.2;
+    color: var(--text-title);
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .primary {
+    padding: 12px 18px;
+    border-radius: var(--r-button);
+    background: var(--action);
+    color: #fff;
+    font-size: var(--size-meta);
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    transition: background 0.2s ease;
+  }
+
+  .primary:hover {
+    background: var(--action-hover);
+    color: #fff;
+  }
+
+  .secondary {
+    padding: 12px 16px;
+    border: 1px solid var(--border-contact);
+    border-radius: var(--r-button);
+    color: var(--text-normal);
+    font-size: var(--size-meta);
+    transition:
+      border-color 0.2s ease,
+      color 0.2s ease;
+  }
+
+  .secondary:hover {
+    border-color: var(--violet);
+    color: var(--text-title);
+  }
+
+  .footer {
+    padding-top: 12px;
+    border-top: 1px solid var(--border-subtle);
+    font-size: var(--size-label);
+    color: var(--text-quiet);
+  }
+</style>

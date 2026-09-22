@@ -1,0 +1,166 @@
+---
+import Base from '../layouts/Base.astro';
+import Card from '../components/Card.astro';
+import ChangedMyMind from '../components/ChangedMyMind.astro';
+import Contact from '../components/Contact.astro';
+import Header from '../components/Header.astro';
+import Intro from '../components/Intro.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import Separator from '../components/Separator.astro';
+import Sidebar from '../components/Sidebar.astro';
+import Stack from '../components/Stack.astro';
+import StateIcon from '../components/StateIcon.astro';
+import Timeline from '../components/Timeline.astro';
+
+import { counts } from '../data/beliefs';
+import { projects } from '../data/projects';
+import { ids, labelFor, separatorFor } from '../data/sections';
+import { site } from '../data/site';
+---
+
+<Base title={site.seo.title} description={site.seo.description}>
+  <a class="skip" href={`#${ids.intro}`}>Skip to content</a>
+
+  <Header />
+
+  <div class="shell">
+    <Sidebar />
+
+    <main id="main">
+      <Separator title={separatorFor(ids.intro)} first />
+      <Intro />
+
+      <Separator title={separatorFor(projects[0].id)} />
+      {projects.map((project) => <ProjectCard project={project} />)}
+
+      <Separator title={separatorFor(ids.experience)} />
+      <Card id={ids.experience} title={labelFor(ids.experience)} compactHeader>
+        <Timeline />
+      </Card>
+
+      <Separator title={separatorFor(ids.skills)} />
+      <Card id={ids.skills} title={labelFor(ids.skills)} meta="an opinion on each" metaTone="muted">
+        <Stack />
+      </Card>
+
+      <Separator title={separatorFor(ids.beliefs)} />
+      <Card id={ids.beliefs}>
+        <Fragment slot="header">
+          <h3>Things I used to believe <span class="aside">· and what changed them</span></h3>
+        </Fragment>
+        <Fragment slot="header-meta">
+          {/* Counts derive from the data — see beliefs.ts. */}
+          <p class="counts">
+            <span class="count"><StateIcon status="merged" size={14} />{counts.merged} merged</span>
+            <span class="count dim"><StateIcon status="open" size={14} />{counts.open} open</span>
+          </p>
+        </Fragment>
+        <ChangedMyMind />
+      </Card>
+
+      <Separator title={separatorFor(ids.contact)} />
+      <Contact />
+    </main>
+  </div>
+</Base>
+
+<script>
+  import '../scripts/enhance';
+</script>
+
+<style>
+  .shell {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    max-width: var(--shell-max);
+    margin: 0 auto;
+  }
+
+  /*
+   * The sidebar/content divider. It lives on the shell, not as a border on
+   * <aside>, because the sidebar is sticky and only as tall as its own
+   * content. The 1px offset puts it where a border on <aside> would sit.
+   */
+  .shell::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: calc(var(--sidebar-w) - 1px);
+    width: 1px;
+    background: var(--border-strong);
+    pointer-events: none;
+  }
+
+  @media (max-width: 859px) {
+    .shell::before {
+      display: none;
+    }
+  }
+
+  /*
+   * Anchors target the <section>, but every section is introduced by the
+   * separator above it — landing on the card scrolled that title out of
+   * view. Offsetting by the separator plus the gap below it means clicking
+   * a nav item arrives at the heading, which is what it names.
+   */
+  main > :global(section) {
+    scroll-margin-top: calc(var(--size-section-title) * 1.3 + var(--gap-section));
+  }
+
+  main {
+    flex: 1 1 auto;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-section);
+    padding: clamp(18px, 3vw, 38px) var(--main-pad-x) 100px;
+  }
+
+  h3 {
+    font-size: var(--size-ui);
+    font-weight: 400;
+    color: var(--text-title);
+  }
+
+  .aside {
+    color: var(--text-quiet);
+  }
+
+  /* GitHub's "Open 22 · Closed 2,610" counts strip. */
+  .counts {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-size: var(--size-label);
+  }
+
+  .count {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--text-title);
+  }
+
+  .count.dim {
+    color: var(--text-quiet);
+  }
+
+  .skip {
+    position: absolute;
+    left: -9999px;
+    top: 0;
+    z-index: 200;
+  }
+
+  .skip:focus {
+    left: 8px;
+    top: 8px;
+    padding: 10px 14px;
+    border-radius: var(--r-button);
+    background: var(--action);
+    color: #fff;
+    font-size: var(--size-meta);
+  }
+</style>

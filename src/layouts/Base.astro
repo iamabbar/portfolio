@@ -1,0 +1,64 @@
+---
+import { getImage } from 'astro:assets';
+
+import '@fontsource-variable/jetbrains-mono';
+import '@fontsource-variable/newsreader/opsz.css';
+import '@fontsource-variable/newsreader/opsz-italic.css';
+import '../styles/global.css';
+
+import avatar from '../assets/avatar-green.jpeg';
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+
+/*
+ * Generated from the same file the intro renders, so replacing the avatar
+ * updates the favicon too. Both sizes are supplied explicitly — letting the
+ * browser downscale one of them blurs at tab size.
+ */
+const [icon16, icon32, appleIcon] = await Promise.all(
+  [16, 32, 180].map((size) =>
+    getImage({ src: avatar, width: size, height: size, format: 'png' }),
+  ),
+);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    {/* Marks the document JS-capable before first paint, so the scroll-reveal
+        styles only hide sections when something can reveal them. */}
+    <script is:inline>
+      document.documentElement.classList.add('js');
+    </script>
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="icon" type="image/png" sizes="16x16" href={icon16.src} />
+    <link rel="icon" type="image/png" sizes="32x32" href={icon32.src} />
+    <link rel="apple-touch-icon" sizes="180x180" href={appleIcon.src} />
+    <meta name="color-scheme" content="dark" />
+    {/* Sits directly above the sticky header, so it tracks --bg-header. */}
+    <meta name="theme-color" content="#03060b" />
+  </head>
+
+  <body>
+    <slot />
+  </body>
+</html>
