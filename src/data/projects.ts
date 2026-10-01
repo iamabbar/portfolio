@@ -31,10 +31,10 @@ const entries: Omit<Project, 'id'>[] = [
     company: 'Personal',
     year: 2026,
     image: trace,
-    imageAlt: 'Trace landing page — a URL field with Desktop and Mobile options below the headline.',
+    imageAlt: 'Trace landing page: a URL field with Desktop and Mobile options below the headline.',
     summary: [
-      'Trace tells you why a website feels slow. You paste in a link, it runs the checks, and you get back a short list of what is actually costing you time — the worst thing first, with the fix written out ready to copy.',
-      'Most tools hand you forty things to read and leave you to work out which ones matter. Trace puts a number next to each one — this fix saves about a second — so you know where to start.',
+      'Trace tells you why a website feels slow. You paste in a link, it runs the checks, and you get back a short list of what is actually costing you time. The worst thing comes first, with the fix written out ready to copy.',
+      'Most tools hand you forty things to read and leave you to work out which ones matter. Trace puts a number next to each one: this fix saves about a second. That tells you where to start.',
     ],
     tools: ['React', 'TypeScript', 'Node.js', 'Lighthouse'],
   },
@@ -46,8 +46,7 @@ const entries: Omit<Project, 'id'>[] = [
     image: ultraHealth,
     imageAlt: 'Ultra Health sign-in page — the brand panel beside a sign-in card.',
     summary: [
-      'Ultra Health connects people with nutritionists. Clients track their health over time and book sessions; nutritionists keep up with their clients, publish articles, and collect ratings. Both sides share one app, and each only ever sees their own half of it.',
-      'I built it solo, end to end — the screens, the server, the database, and the chat running between the two sides. It was my bootcamp project, and the first time every decision was mine to get wrong.',
+      'Ultra Health connects people with nutritionists. Clients track their health over time and book sessions; nutritionists keep up with their clients, publish articles, and collect ratings. The two sides share one app, message each other in real time, and each only ever sees their own half of it.',
     ],
     tools: ['React', 'Laravel', 'MySQL', 'Firebase'],
   },
