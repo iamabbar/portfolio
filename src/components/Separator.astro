@@ -13,15 +13,20 @@ const { title, first = false } = Astro.props;
 
 <style>
   /*
-   * No rule after the title. It was the only structure in this column back
-   * when card borders were barely visible; now the cards are outlined and a
-   * rule at --border-strong would be brighter than the card it introduces.
+   * The rule goes before the title, not after it. The title now sits tight to
+   * the card it introduces, so this carries the space between sections — and
+   * at --border it stays quieter than the card edges below it.
    */
-  .separator {
-    margin: var(--gap-separator) 0 0;
+  .separator:not(.first)::before {
+    content: '';
+    display: block;
+    width: 60%;
+    height: 1px;
+    margin: var(--gap-separator) auto;
+    background: var(--border);
   }
 
-  .separator.first {
+  .separator {
     margin: 0;
   }
 

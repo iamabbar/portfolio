@@ -9,7 +9,6 @@ import { intro, site } from '../data/site';
   <div class="body">
     <div class="row">
       <div class="copy">
-        <p class="lead" data-line>{intro.lead}</p>
         {intro.paragraphs.map((paragraph) => <p data-line>{paragraph}</p>)}
         <ul class="pills">
           {intro.pills.map((pill) => <li class="pill">{pill}</li>)}
@@ -50,13 +49,6 @@ import { intro, site } from '../data/site';
     font-size: var(--size-prose);
     line-height: 1.7;
     color: var(--text-normal);
-  }
-
-  .lead {
-    margin-bottom: 14px;
-    font-size: var(--size-ui);
-    line-height: 1.4;
-    color: var(--text-title);
   }
 
   .pills {

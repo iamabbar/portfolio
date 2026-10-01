@@ -3,19 +3,29 @@ import { Image } from 'astro:assets';
 
 import avatar from '../assets/avatar-green.jpeg';
 import { groups } from '../data/sections';
-import { intro, reviewer } from '../data/site';
+import { intro, reviewer, site } from '../data/site';
 ---
 
 <aside aria-label="Contents">
-  <div class="portrait">
-    <Image
-      src={avatar}
-      alt={intro.avatarAlt}
-      widths={[250, 500]}
-      sizes="250px"
-      loading="eager"
-      fetchpriority="high"
-    />
+  {/* A wrapper so these three can become a row on mobile, avatar beside the
+      text. On desktop it is a plain block and changes nothing. */}
+  <div class="profile">
+    <div class="portrait">
+      <Image
+        src={avatar}
+        alt={intro.avatarAlt}
+        widths={[230, 460]}
+        sizes="(max-width: 859px) 115px, 230px"
+        loading="eager"
+        fetchpriority="high"
+      />
+    </div>
+
+    <div class="identity">
+      {/* The page's only h1 — its headings previously started at the separators' h2. */}
+      <h1 class="name">{site.name}</h1>
+      <p class="role">{site.role}</p>
+    </div>
   </div>
 
   <div class="heading">CONTENT</div>
@@ -50,35 +60,43 @@ import { intro, reviewer } from '../data/site';
 
 <style>
   aside {
-    /* One value for the avatar and the nav, so their edges cannot drift. */
-    --avatar: 250px;
-
     position: sticky;
     top: var(--header-h);
     flex: 0 0 var(--sidebar-w);
     align-self: flex-start;
     max-height: calc(100vh - var(--header-h));
     overflow: auto;
-    padding: 20px 12px 40px clamp(10px, 2vw, 26px);
+    /* No right padding: the gap to the content belongs to main, so it is one
+       number rather than two added together. */
+    padding: 20px 0 40px;
     /* No border-right: the sidebar and the content are separated by space
        alone. A rule here would only be as tall as this sticky column anyway. */
   }
 
-  @media (max-width: 859px) {
-    aside {
-      display: none;
-    }
-  }
-
-  /* The 12px left matches .item, whose text clears its own 2px active-state
-     border on top of 10px of padding. Everything in this column starts there. */
   .portrait {
     width: var(--avatar);
     height: var(--avatar);
-    margin-bottom: 24px;
+    margin-bottom: 16px;
     overflow: hidden;
     border: 1px solid var(--border);
     border-radius: 50%;
+  }
+
+  .name {
+    max-width: var(--avatar);
+    font-size: var(--size-ui);
+    font-weight: 600;
+    line-height: 1.3;
+    color: var(--text-title);
+  }
+
+  .role {
+    max-width: var(--avatar);
+    margin: 2px 0 24px;
+    font-size: var(--size-ui);
+    font-weight: 400;
+    line-height: 1.3;
+    color: var(--text-quiet);
   }
 
   nav {
@@ -142,6 +160,8 @@ import { intro, reviewer } from '../data/site';
     border-left-color: var(--violet);
   }
 
+  /* No cap — it fills whatever space the column gives it. On desktop that is
+     the sidebar's own width, which is the avatar; on mobile, the full row. */
   .reviewer {
     margin-top: 22px;
     padding: 12px 10px;
@@ -155,5 +175,62 @@ import { intro, reviewer } from '../data/site';
   .reviewer-label {
     margin-bottom: 6px;
     color: var(--text-normal);
+  }
+
+  /*
+   * Below the breakpoint the column stops being a rail and becomes a block
+   * above the content: the avatar moves beside the name, the reviewer card
+   * goes full width, and only the parts that need a persistent rail — the nav
+   * and its CONTENT label — drop out. Last in the file on purpose: a media
+   * query adds no specificity, so these would lose to the rules above it.
+   */
+  @media (max-width: 859px) {
+    aside {
+      position: static;
+      flex: 1 1 auto;
+      /* The shell is a column down here, so the cross axis is horizontal and
+         the desktop rule's align-self: flex-start would shrink this to fit
+         its content — taking the reviewer card's width with it. */
+      align-self: stretch;
+      max-height: none;
+      overflow: visible;
+      /* No horizontal padding: the shell's gutter is the page edge, so the
+         avatar, the name and the reviewer card all line up with the outer
+         edges of the section cards below them. */
+      padding: 20px 0 0;
+    }
+
+    .profile {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .portrait {
+      flex: 0 0 auto;
+      width: 115px;
+      height: 115px;
+      margin-bottom: 0;
+    }
+
+    .name {
+      max-width: none;
+      font-size: var(--size-name);
+      font-weight: 700;
+    }
+
+    .role {
+      max-width: none;
+      margin-bottom: 0;
+    }
+
+    .reviewer {
+      margin-top: 20px;
+    }
+
+    .heading,
+    nav {
+      display: none;
+    }
   }
 </style>

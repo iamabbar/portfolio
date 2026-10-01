@@ -3,7 +3,7 @@ import { experienceWords, reviewingSince } from './career';
 /* Hoisted so the SEO title can be built from them — it used to carry its own
    copy of the name, and the two had already drifted apart. */
 const name = 'Mohamad Abbar';
-const role = 'frontend engineer';
+const role = 'Frontend Engineer';
 
 export const site = {
   name,
@@ -33,7 +33,6 @@ export const site = {
 
 export const intro = {
   cardTitle: 'Who I am',
-  lead: `${site.name} — Frontend Engineer`,
   paragraphs: [
     'I spend most of my days turning complicated things into interfaces that feel simple.',
     `${experienceWords} of frontend have taught me that making things work is only half the job. The other half is making them feel right, from how information is laid out to the tiny details people notice without realizing.`,
@@ -48,10 +47,8 @@ export const intro = {
 
 export const reviewer = {
   label: 'Reviewer',
-  lines: [
-    `${site.name}, ${site.workMode.toLowerCase()}`,
-    `Reviewing my own work since ${reviewingSince}`,
-  ],
+  /* No name line: it sits directly above this card, beside the avatar. */
+  lines: [`Reviewing my own work since ${reviewingSince}`],
 };
 
 export const contact = {

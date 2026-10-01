@@ -61,6 +61,7 @@
   --size-label: 12px;   /* smallest labels, indices, meta */
   --size-meta: 14px;    /* nav, pills, descriptions, secondary UI */
   --size-ui: 16px;      /* card titles and row titles */
+  --size-name: 20px;    /* the h1 — one step above a card title */
 
   --size-prose: clamp(15px, 1.35vw, 17.5px);   /* body prose, line-height 1.7 */
   --size-section-title: clamp(20px, 2.2vw, 28px);
@@ -78,7 +79,12 @@
   --shadow-image-hover: 0 26px 54px rgb(0 0 0 / 0.55);
 
   --gap-section: clamp(28px, 3vw, 44px);
-  --pad-card: clamp(18px, 2.6vw, 30px);
+  /* A separator title to the section it introduces. Deliberately tight — the
+     title belongs to the card below it, not to the gap above it. */
+  --gap-title: 20px;
+  /* The floor is the phone value — a bordered card needs less air inside it
+     than a borderless one, and on a 375px screen every pixel is a character. */
+  --pad-card: clamp(14px, 2.6vw, 30px);
   --pad-card-header-y: 16px;
   --pad-card-header-x: clamp(14px, 2vw, 22px);
   --pad-shell-x: clamp(18px, 3vw, 38px);
@@ -95,22 +101,24 @@
   --header-cta-h: 32px;
   --header-h: calc(2 * var(--pad-shell-y) + var(--header-cta-h) + 1px);
 
-  --sidebar-w-max: 300px;
   /*
-   * The floor used to be the longest nav item, which is nowrap. It is now the
-   * 250px avatar plus this column's padding (26 + 12) — below 288 the circle
-   * would overflow into a horizontal scrollbar.
+   * The avatar is the widest thing in the sidebar — the name, role, nav and
+   * reviewer card are all capped to it — and the column carries no padding of
+   * its own, so the two are the same width. No clamp: a fixed circle gives a
+   * fixed column, and any extra would be dead space to the right of the nav.
    */
-  --sidebar-w: clamp(288px, 20vw, var(--sidebar-w-max));
+  --avatar: 230px;
+  --sidebar-w: var(--avatar);
 
-  --main-pad-x-max: 34px;
-  --main-pad-x: clamp(12px, 3vw, var(--main-pad-x-max));
+  /* The gap between the sidebar and the content — aside contributes none. */
+  --main-pad-x-max: 25px;
+  --main-pad-x: clamp(12px, 1.6vw, var(--main-pad-x-max));
 
   --content-max: 1200px;
 
   /* Derived so the cap holds: the shell also carries the sidebar and main's
      padding, both at their clamp maxima by the time the shell stops growing. */
-  --shell-max: calc(var(--content-max) + 2 * var(--main-pad-x-max) + var(--sidebar-w-max));
+  --shell-max: calc(var(--content-max) + 2 * var(--main-pad-x-max) + var(--sidebar-w));
 
   --ease: cubic-bezier(0.2, 0.9, 0.25, 1);
 }
