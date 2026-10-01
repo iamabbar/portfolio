@@ -1,9 +1,23 @@
 ---
+import { Image } from 'astro:assets';
+
+import avatar from '../assets/avatar-green.jpeg';
 import { groups } from '../data/sections';
-import { reviewer } from '../data/site';
+import { intro, reviewer } from '../data/site';
 ---
 
 <aside aria-label="Contents">
+  <div class="portrait">
+    <Image
+      src={avatar}
+      alt={intro.avatarAlt}
+      widths={[250, 500]}
+      sizes="250px"
+      loading="eager"
+      fetchpriority="high"
+    />
+  </div>
+
   <div class="heading">CONTENT</div>
 
   <nav>
@@ -36,6 +50,9 @@ import { reviewer } from '../data/site';
 
 <style>
   aside {
+    /* One value for the avatar and the nav, so their edges cannot drift. */
+    --avatar: 250px;
+
     position: sticky;
     top: var(--header-h);
     flex: 0 0 var(--sidebar-w);
@@ -43,8 +60,8 @@ import { reviewer } from '../data/site';
     max-height: calc(100vh - var(--header-h));
     overflow: auto;
     padding: 20px 12px 40px clamp(10px, 2vw, 26px);
-    /* No border-right: this element is sticky and only as tall as its own
-       content, so the dividing rule is drawn by .shell::before instead. */
+    /* No border-right: the sidebar and the content are separated by space
+       alone. A rule here would only be as tall as this sticky column anyway. */
   }
 
   @media (max-width: 859px) {
@@ -55,6 +72,25 @@ import { reviewer } from '../data/site';
 
   /* The 12px left matches .item, whose text clears its own 2px active-state
      border on top of 10px of padding. Everything in this column starts there. */
+  .portrait {
+    width: var(--avatar);
+    height: var(--avatar);
+    margin-bottom: 24px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+  }
+
+  nav {
+    max-width: var(--avatar);
+  }
+
+  .portrait :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
   .heading {
     padding: 0 12px 10px;
     font-size: var(--size-label);

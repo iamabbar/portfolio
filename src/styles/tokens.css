@@ -95,9 +95,13 @@
   --header-cta-h: 32px;
   --header-h: calc(2 * var(--pad-shell-y) + var(--header-cta-h) + 1px);
 
-  --sidebar-w-max: 270px;
-  /* The floor is set by the longest nav item, which is nowrap. */
-  --sidebar-w: clamp(240px, 20vw, var(--sidebar-w-max));
+  --sidebar-w-max: 300px;
+  /*
+   * The floor used to be the longest nav item, which is nowrap. It is now the
+   * 250px avatar plus this column's padding (26 + 12) — below 288 the circle
+   * would overflow into a horizontal scrollbar.
+   */
+  --sidebar-w: clamp(288px, 20vw, var(--sidebar-w-max));
 
   --main-pad-x-max: 34px;
   --main-pad-x: clamp(12px, 3vw, var(--main-pad-x-max));

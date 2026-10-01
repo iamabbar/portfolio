@@ -74,28 +74,13 @@ import { site } from '../data/site';
     align-items: flex-start;
     max-width: var(--shell-max);
     margin: 0 auto;
-  }
-
-  /*
-   * The sidebar/content divider. It lives on the shell, not as a border on
-   * <aside>, because the sidebar is sticky and only as tall as its own
-   * content. The 1px offset puts it where a border on <aside> would sit.
-   */
-  .shell::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: calc(var(--sidebar-w) - 1px);
-    width: 1px;
-    background: var(--border-strong);
-    pointer-events: none;
-  }
-
-  @media (max-width: 859px) {
-    .shell::before {
-      display: none;
-    }
+    /*
+     * 120px once the shell reaches its cap, easing down to 20px as the window
+     * narrows — the gutter gives way before the content does. The divisor sets
+     * the rate: (100vw - 360px) / 10 hits 120 at the ~1568px cap and bottoms
+     * out at 20 below ~560px.
+     */
+    padding: 0 clamp(20px, calc((100vw - 360px) / 10), 120px);
   }
 
   /*
