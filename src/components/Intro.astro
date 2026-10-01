@@ -1,8 +1,8 @@
 ---
 import Card from './Card.astro';
-import Thread from './Thread.astro';
+import Note from './Note.astro';
 import { ids } from '../data/sections';
-import { intro, site } from '../data/site';
+import { intro } from '../data/site';
 ---
 
 <Card id={ids.intro} title={intro.cardTitle}>
@@ -17,7 +17,7 @@ import { intro, site } from '../data/site';
     </div>
   </div>
 
-  <Thread initials={site.initials} label={intro.note.label} copy={intro.note.body} />
+  <Note label={intro.note.label} copy={intro.note.body} />
 </Card>
 
 <style>

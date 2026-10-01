@@ -8,13 +8,15 @@
   --bg: #0d1116;                 /* body and sidebar */
   --bg-header: #03060b;          /* sticky header — darker, so it reads as chrome */
   --surface: #0e1116;            /* section bodies */
-  --surface-raised: #12161d;     /* card headers, comment threads, entry cards */
+  --surface-raised: #12161d;     /* card headers, entry cards */
+  --surface-info: #0d1a2b;       /* the intro's note — a tint, not an accent */
 
   /* Two weights: chrome that frames the whole page, then the cards inside it. */
   --border-strong: #3d444d;      /* rules, pills, image frames, app-shell edges */
   --border: #30353e;             /* section card borders */
   --border-contact: #30353e;     /* contact card + secondary links */
   --border-subtle: #161b22;      /* inner dividers — deliberately quieter */
+  --border-info: #1f3f6b;        /* the intro's note */
   --border-hover: #3a2a5e;       /* project card on hover */
 
   /* Three colours. Rank by role here; get contrast from size and weight,

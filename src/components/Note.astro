@@ -1,0 +1,80 @@
+---
+interface Props {
+  label: string;
+  copy: string;
+}
+
+const { label, copy } = Astro.props;
+---
+
+<aside class="note">
+  <div class="head">
+    {/* Hand-authored, like StateIcon — nothing here depends on an icon set. */}
+    <svg
+      class="icon"
+      width="16"
+      height="16"
+      viewBox="0 0 16 16"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.6"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <circle cx="8" cy="8" r="6.25" />
+      <path d="M8 7.4v3.9" />
+      <circle cx="8" cy="4.9" r="0.85" fill="currentColor" stroke="none" />
+    </svg>
+    <div class="label">{label}</div>
+  </div>
+  <p class="copy">{copy}</p>
+  <slot />
+</aside>
+
+<style>
+  /*
+   * An info panel, not a comment thread — no avatar, because nothing here is
+   * speaking. Blue is the link colour everywhere else on this site, so it only
+   * works as a surface because this panel never contains a link.
+   *
+   * The bottom margin keeps the spacing the thread had: the card's own bottom
+   * padding is short because this sits below it.
+   */
+  .note {
+    margin: 4px var(--pad-card) calc(clamp(18px, 2.6vw, 26px) + 8px);
+    padding: 16px 18px;
+    background: var(--surface-info);
+    border: 1px solid var(--border-info);
+    border-radius: var(--r-thread);
+  }
+
+  .head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+  }
+
+  /* --link is the palette's only bright blue; here it reads as the panel's
+     own hue rather than as something clickable. */
+  .icon {
+    flex: 0 0 auto;
+    display: block;
+    color: var(--link);
+  }
+
+  .label {
+    font-size: var(--size-meta);
+    letter-spacing: 0.04em;
+    color: var(--text-quiet);
+  }
+
+  .copy {
+    max-width: var(--measure);
+    font-size: var(--size-prose);
+    line-height: 1.68;
+    color: var(--text-normal);
+  }
+</style>

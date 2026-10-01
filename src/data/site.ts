@@ -8,7 +8,6 @@ const role = 'Frontend Engineer';
 export const site = {
   name,
   wordmark: 'mohamad abbar',
-  initials: 'MA',
   role,
 
   location: 'Beirut, Lebanon',
@@ -40,7 +39,7 @@ export const intro = {
   pills: [site.location, site.timezone, 'React · TypeScript'],
   note: {
     label: 'Note to self',
-    body: "Make it make sense to someone who wasn't there.",
+    body: "Most apps are fine until something takes time. That's where the design usually stops.",
   },
   avatarAlt: `${site.name}`,
 };
