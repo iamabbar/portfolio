@@ -37,7 +37,7 @@ import { ids } from '../data/sections';
 
   .cta {
     margin-left: auto;
-    /* Pinned so --header-h stays exact, including before the webfont loads. */
+    /* Pinned so --header-h stays exact whatever the label's line box does. */
     display: inline-flex;
     align-items: center;
     height: var(--header-cta-h);

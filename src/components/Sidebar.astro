@@ -53,15 +53,17 @@ import { reviewer } from '../data/site';
     }
   }
 
+  /* The 12px left matches .item, whose text clears its own 2px active-state
+     border on top of 10px of padding. Everything in this column starts there. */
   .heading {
-    padding: 0 8px 10px;
+    padding: 0 12px 10px;
     font-size: var(--size-label);
     letter-spacing: 0.16em;
     color: var(--text-quiet);
   }
 
   .group {
-    padding: 14px 10px 4px;
+    padding: 14px 12px 4px;
     font-size: var(--size-label);
     letter-spacing: 0.18em;
     text-transform: uppercase;

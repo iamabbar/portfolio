@@ -2,9 +2,7 @@
 import { Image } from 'astro:assets';
 
 import Card from './Card.astro';
-import Thread from './Thread.astro';
 import type { Project } from '../data/projects';
-import { site } from '../data/site';
 
 interface Props {
   project: Project;
@@ -27,36 +25,35 @@ const { project } = Astro.props;
   <div class="body">
     {/* The negative right margin clips the shot against the card edge —
         which is why Card sets overflow: hidden. */}
-    <figure class="shot">
-      <Image
-        src={project.image}
-        alt={project.imageAlt}
-        widths={[340, 680, 1100]}
-        sizes="(max-width: 719px) 92vw, 340px"
-        loading="lazy"
-        decoding="async"
-      />
-    </figure>
+    {
+      project.image && (
+        <figure class="shot">
+          <Image
+            src={project.image}
+            alt={project.imageAlt ?? ''}
+            widths={[340, 680, 1100]}
+            sizes="(max-width: 719px) 92vw, 340px"
+            /* UI screenshots hold small type — the default quality smears it. */
+            quality={92}
+            loading="lazy"
+            decoding="async"
+          />
+        </figure>
+      )
+    }
 
     {project.summary.map((paragraph) => <p class="copy" data-line>{paragraph}</p>)}
 
-    <ul class="outcomes">
-      {project.outcomes.map((outcome) => <li class="pill">{outcome}</li>)}
-    </ul>
+    {
+      project.tools && project.tools.length > 0 && (
+        <ul class="tools">
+          {project.tools.map((tool) => (
+            <li class="tag">{tool}</li>
+          ))}
+        </ul>
+      )
+    }
   </div>
-
-  <Thread initials={site.initials} label="The decision" copy={project.decision}>
-    <details class="change">
-      <summary>
-        <span class="when-closed">+ what I'd change now</span>
-        <span class="when-open">− hide what I'd change</span>
-      </summary>
-      <div class="panel">
-        <span class="panel-label">What I'd change now:</span>{' '}
-        <Fragment set:html={project.wouldChange} />
-      </div>
-    </details>
-  </Thread>
 </Card>
 
 <style>
@@ -80,8 +77,10 @@ const { project } = Astro.props;
     color: var(--text-quiet);
   }
 
+  /* Even on all four sides. The bottom used to be short because the thread
+     block sat below and carried its own margin; nothing follows now. */
   .body {
-    padding: var(--pad-card) var(--pad-card) clamp(6px, 1vw, 12px);
+    padding: var(--pad-card);
     overflow: hidden;
   }
 
@@ -112,29 +111,36 @@ const { project } = Astro.props;
   .copy {
     margin: 0 0 12px;
     max-width: var(--measure);
-    font-family: var(--font-serif);
     font-weight: 400;
     font-size: var(--size-prose);
     line-height: 1.7;
     color: var(--text-normal);
   }
 
-  .outcomes {
+  .copy:last-child {
+    margin-bottom: 0;
+  }
+
+  /* clear, so the row starts below the floated shot rather than tucking
+     into the column beside it. */
+  .tools {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px 10px;
+    gap: 8px;
     clear: both;
-    margin-top: 4px;
-    padding-top: 14px;
+    margin-top: 6px;
+    padding-top: 16px;
     border-top: 1px solid var(--border-subtle);
   }
 
-  .pill {
-    padding: 7px 12px;
+  /* Quieter than the intro's pills — these are a footnote to the copy, not
+     a claim of their own. */
+  .tag {
+    padding: 5px 10px;
     border: 1px solid var(--border-strong);
-    border-radius: var(--r-pill);
-    font-size: var(--size-meta);
-    color: var(--text-normal);
+    border-radius: var(--r-tile);
+    font-size: var(--size-label);
+    color: var(--text-quiet);
   }
 
   /* .project is the <section> in Card.astro. */
@@ -142,62 +148,6 @@ const { project } = Astro.props;
   :global(.project:focus-within) .shot {
     transform: rotate(-1deg) translateX(-20px) scale(1.04);
     box-shadow: var(--shadow-image-hover);
-  }
-
-  .change summary {
-    display: inline-block;
-    margin-top: 12px;
-    padding: 9px 14px;
-    border: 1px solid rgb(240 168 104 / 0.45);
-    border-radius: var(--r-pill);
-    background: rgb(240 168 104 / 0.07);
-    color: var(--amber);
-    font-family: var(--font-mono);
-    font-size: var(--size-label);
-    letter-spacing: 0.04em;
-    list-style: none;
-    cursor: pointer;
-    transition:
-      background 0.25s ease,
-      border-color 0.25s ease;
-  }
-
-  .change summary::-webkit-details-marker {
-    display: none;
-  }
-
-  .change summary:hover {
-    background: rgb(240 168 104 / 0.14);
-    border-color: rgb(240 168 104 / 0.7);
-  }
-
-  .change .when-open,
-  .change[open] .when-closed {
-    display: none;
-  }
-
-  .change[open] .when-open {
-    display: inline;
-  }
-
-  .panel {
-    margin-top: 14px;
-    padding: 15px 17px;
-    border-left: 2px solid var(--amber);
-    background: rgb(240 168 104 / 0.08);
-    font-size: var(--size-meta);
-    line-height: 1.75;
-    color: var(--text-normal);
-    animation: revealIn 0.42s var(--ease) both;
-  }
-
-  .panel-label {
-    color: var(--amber);
-  }
-
-  .panel :global(b) {
-    font-weight: inherit;
-    color: var(--text-normal);
   }
 
   /* Drop the float — the 180px minimum would squeeze the text column to

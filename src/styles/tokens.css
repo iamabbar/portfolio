@@ -28,7 +28,7 @@
   --violet-light: #b08cf2;       /* indices on dark (contrast-safe) */
   --blue: #1f6feb;               /* the handoff's action colour, see --action */
   --blue-hover: #388bfd;
-  --amber: #f0a868;              /* "what I'd change" */
+  --amber: #f0a868;              /* the "Craft" stack category */
   --green: #4ade80;              /* current role, status — never an action */
 
   /* Violet rather than the handoff's blue keeps actions distinct from
@@ -47,8 +47,12 @@
   --link-hover: #b9ccff;
   --selection: #2a3f7a;
 
-  --font-mono: 'JetBrains Mono Variable', ui-monospace, SFMono-Regular, Menlo, monospace;
-  --font-serif: 'Newsreader Variable', Georgia, 'Times New Roman', serif;
+  /* GitHub's stack, and the only family on the site — no webfont, so the page
+     paints on the first frame in whatever the reader's OS already has. Set on
+     body; components inherit it rather than restating it. */
+  --font-sans:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji';
 
   /* The UI ladder. Add a step here rather than a one-off px in a component. */
   /* Below the 12px floor, so it is for the employment chip alone: two words
@@ -85,8 +89,8 @@
    * Derived: padding + button + the 1px border. Must stay exact — the sticky
    * sidebar pins to it, and when it was a flat 57px the sidebar jumped on the
    * first pixels of scroll and then sat behind the header. The button's height
-   * is pinned in Header.astro so this survives the padding clamp and webfont
-   * loading. Breaks only if the header wraps, which it does not above 360px.
+   * is pinned in Header.astro so this survives the padding clamp. Breaks only
+   * if the header wraps, which it does not above 360px.
    */
   --header-cta-h: 32px;
   --header-h: calc(2 * var(--pad-shell-y) + var(--header-cta-h) + 1px);

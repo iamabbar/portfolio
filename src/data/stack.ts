@@ -10,7 +10,7 @@ export type StackItem = {
 export const categories: Record<StackCategory, { label: string; color: string }> = {
   languages: { label: 'Languages', color: 'var(--cat-languages)' },
   frontend: { label: 'Frontend', color: 'var(--cat-frontend)' },
-  data: { label: 'State & data', color: 'var(--cat-data)' },
+  data: { label: 'State, data & backend', color: 'var(--cat-data)' },
   craft: { label: 'Craft', color: 'var(--cat-craft)' },
 };
 
@@ -66,6 +66,21 @@ export const stack: StackItem[] = [
     opinion: "Fine until the design gets specific. Then you're drawing SVG.",
   },
   {
+    name: 'Node.js',
+    category: 'data',
+    opinion: 'Enough backend to finish the thing myself.',
+  },
+  {
+    name: 'Laravel',
+    category: 'data',
+    opinion: 'Not my first language. It shipped the product anyway.',
+  },
+  {
+    name: 'SQL',
+    category: 'data',
+    opinion: 'The schema is the real design doc.',
+  },
+  {
     name: 'Design systems',
     category: 'craft',
     opinion: 'The components are the easy part. Agreement is the real system.',
@@ -74,5 +89,10 @@ export const stack: StackItem[] = [
     name: 'Playwright',
     category: 'craft',
     opinion: 'If breaking it costs money, it gets a test.',
+  },
+  {
+    name: 'Jest',
+    category: 'craft',
+    opinion: "For the logic underneath. The journeys are Playwright's job.",
   },
 ];

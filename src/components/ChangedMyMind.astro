@@ -66,15 +66,13 @@ const pad = (n: number) => String(n).padStart(2, '0');
     align-items: baseline;
     flex-wrap: wrap;
     gap: 4px 9px;
-    font-family: var(--font-mono);
     font-size: var(--size-meta);
     line-height: 1.6;
   }
 
-  /* No WAS/NOW chips: the mono/serif split already says which is which. */
+  /* No WAS/NOW chips: the step up in size and colour says which is which. */
   .now {
     margin-top: 8px;
-    font-family: var(--font-serif);
     font-size: var(--size-ui);
     line-height: 1.5;
     color: var(--text-title);
@@ -82,7 +80,6 @@ const pad = (n: number) => String(n).padStart(2, '0');
 
   .num {
     margin-left: auto;
-    font-family: var(--font-mono);
     font-size: var(--size-label);
     letter-spacing: 0.06em;
     color: var(--text-quiet);

@@ -17,14 +17,14 @@ body {
   margin: 0;
   padding: 0;
   background: var(--bg);
-  /* Without antialiasing the serif reads as bold on the dark ground. */
+  /* Without antialiasing, light text reads as bold on the dark ground. */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 body {
   min-height: 100vh;
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
   color: var(--text-normal);
 }
 

@@ -1,6 +1,7 @@
 import type { ImageMetadata } from 'astro';
 
-import ledger from '../assets/light-ledger.png';
+import trace from '../assets/trace.png';
+import ultraHealth from '../assets/ultra-health.png';
 import { slug } from './slug';
 
 export type Project = {
@@ -14,37 +15,45 @@ export type Project = {
   year: number;
   /** Omit to hide the "source" link — not every project has a public repo. */
   sourceUrl?: string;
-  image: ImageMetadata;
-  imageAlt: string;
+  /** Omit both to render a text-only card — not every project has a shot. */
+  image?: ImageMetadata;
+  imageAlt?: string;
   /** One <p> each. */
   summary: string[];
-  outcomes: string[];
-  decision: string;
-  /** The admission. Rendered unescaped, so keep any HTML to <b> emphasis. */
-  wouldChange: string;
+  /** What it was built with. Omit or leave empty to drop the tag row. */
+  tools?: string[];
 };
 
 const entries: Omit<Project, 'id'>[] = [
   {
     index: '01',
-    name: 'Test',
-    company: 'Lorem',
-    year: 2025,
-    image: ledger,
-    imageAlt: 'Placeholder screenshot — a dense editable table.',
+    name: 'Trace',
+    company: 'Personal',
+    year: 2026,
+    image: trace,
+    imageAlt: 'Trace landing page — a URL field with Desktop and Mobile options below the headline.',
     summary: [
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-      'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+      'Trace tells you why a website feels slow. You paste in a link, it runs the checks, and you get back a short list of what is actually costing you time — the worst thing first, with the fix written out ready to copy.',
+      'Most tools hand you forty things to read and leave you to work out which ones matter. Trace puts a number next to each one — this fix saves about a second — so you know where to start.',
     ],
-    outcomes: ['Lorem · 2025', 'Duis aute irure', 'Excepteur sint occaecat'],
-    decision:
-      'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam eaque ipsa quae ab illo inventore veritatis.',
-    wouldChange:
-      'Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi <b>tempora incidunt</b> ut labore.',
+    tools: ['React', 'TypeScript', 'Node.js', 'Lighthouse'],
+  },
+  {
+    index: '02',
+    name: 'Ultra Health',
+    company: 'Bootcamp project',
+    year: 2021,
+    image: ultraHealth,
+    imageAlt: 'Ultra Health sign-in page — the brand panel beside a sign-in card.',
+    summary: [
+      'Ultra Health connects people with nutritionists. Clients track their health over time and book sessions; nutritionists keep up with their clients, publish articles, and collect ratings. Both sides share one app, and each only ever sees their own half of it.',
+      'I built it solo, end to end — the screens, the server, the database, and the chat running between the two sides. It was my bootcamp project, and the first time every decision was mine to get wrong.',
+    ],
+    tools: ['React', 'Laravel', 'MySQL', 'Firebase'],
   },
 ];
 
-/** The anchor is the name, so a deep link reads "#test". */
+/** The anchor is the name, so a deep link reads "#trace". */
 export const projects: Project[] = entries.map((entry) => ({
   ...entry,
   id: slug(entry.name),

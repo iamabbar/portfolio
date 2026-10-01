@@ -1,10 +1,15 @@
 import { experienceWords, reviewingSince } from './career';
 
+/* Hoisted so the SEO title can be built from them — it used to carry its own
+   copy of the name, and the two had already drifted apart. */
+const name = 'Mohamad Abbar';
+const role = 'frontend engineer';
+
 export const site = {
-  name: 'Mohamad Abbar',
+  name,
   wordmark: 'mohamad abbar',
   initials: 'MA',
-  role: 'frontend engineer',
+  role,
 
   location: 'Beirut, Lebanon',
   timezone: 'GMT+3',
@@ -16,14 +21,13 @@ export const site = {
   email: 'alabbar.mh@gmail.com',
   links: {
     github: 'https://github.com/iamabbar',
-    // TODO: real URL — the CV links to LinkedIn but not the address.
-    linkedin: 'https://linkedin.com/in/',
+    linkedin: 'https://linkedin.com/in/mohamad-al-abbar',
   },
 
   seo: {
-    title: 'Mohamad Alabbar — frontend engineer',
+    title: `${name} — ${role}`,
     description:
-      'A portfolio written as a code review of my own work: what I built, the decision I made, and what I would change now.',
+      'A portfolio written as a code review of my own work: what I built, what I use, and the things I have changed my mind about.',
   },
 } as const;
 
