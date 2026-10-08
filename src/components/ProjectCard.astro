@@ -18,7 +18,16 @@ const { project } = Astro.props;
   <Fragment slot="header-meta">
     <div class="project-meta">
       <span>{project.company} · {project.year}</span>
-      {project.sourceUrl && <a href={project.sourceUrl}>source ↗</a>}
+      {project.liveUrl && (
+        <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
+          site ↗
+        </a>
+      )}
+      {project.sourceUrl && (
+        <a href={project.sourceUrl} target="_blank" rel="noopener noreferrer">
+          source ↗
+        </a>
+      )}
     </div>
   </Fragment>
 

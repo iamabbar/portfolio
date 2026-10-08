@@ -13,6 +13,8 @@ export type Project = {
   name: string;
   company: string;
   year: number;
+  /** Omit to hide the "site" link — not every project is deployed somewhere public. */
+  liveUrl?: string;
   /** Omit to hide the "source" link — not every project has a public repo. */
   sourceUrl?: string;
   /** Omit both to render a text-only card — not every project has a shot. */
@@ -30,13 +32,15 @@ const entries: Omit<Project, 'id'>[] = [
     name: 'Trace',
     company: 'Personal',
     year: 2026,
+    liveUrl: 'https://trace-performance.vercel.app/',
+    sourceUrl: 'https://github.com/iamabbar/trace',
     image: trace,
     imageAlt: 'Trace landing page: a URL field with Desktop and Mobile options below the headline.',
     summary: [
       'Trace tells you why a website feels slow. You paste in a link, it runs the checks, and you get back a short list of what is actually costing you time. The worst thing comes first, with the fix written out ready to copy.',
       'Most tools hand you forty things to read and leave you to work out which ones matter. Trace puts a number next to each one: this fix saves about a second. That tells you where to start.',
     ],
-    tools: ['React', 'TypeScript', 'Node.js', 'Lighthouse'],
+    tools: ['React', 'TypeScript', 'Node.js', 'PageSpeed Insights API'],
   },
   {
     index: '02',
