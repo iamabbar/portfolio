@@ -1,4 +1,4 @@
-# mo-portfolio
+# Portfolio
 
 Personal portfolio. Built with Astro, static output, no UI framework.
 
