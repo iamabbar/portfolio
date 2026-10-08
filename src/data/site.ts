@@ -3,7 +3,7 @@ import { experienceWords, reviewingSince } from './career';
 /* Hoisted so the SEO title can be built from them — it used to carry its own
    copy of the name, and the two had already drifted apart. */
 const name = 'Mohamad Abbar';
-const role = 'Frontend Engineer';
+const role = 'Software Engineer';
 
 export const site = {
   name,
@@ -33,7 +33,7 @@ export const site = {
 export const intro = {
   cardTitle: 'Who I am',
   paragraphs: [
-    'I spend most of my days turning complicated things into interfaces that feel simple.',
+    "I'm a software engineer specialized in frontend, shipping products that turn complex problems into simple, AI-powered experiences.",
     `${experienceWords} of frontend have taught me that making things work is only half the job. The other half is making them feel right, from how information is laid out to the tiny details people notice without realizing.`,
   ],
   pills: [site.location, site.timezone, 'React · TypeScript'],
