@@ -14,9 +14,8 @@ const { title, description } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 
 /*
- * Generated from the same file the intro renders, so replacing the avatar
- * updates the favicon too. Both sizes are supplied explicitly — letting the
- * browser downscale one of them blurs at tab size.
+ * Both sizes are supplied explicitly — letting the browser downscale one of
+ * them blurs at tab size.
  */
 const [icon16, icon32, appleIcon] = await Promise.all(
   [16, 32, 180].map((size) =>
@@ -31,11 +30,12 @@ const [icon16, icon32, appleIcon] = await Promise.all(
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    {/* Marks the document JS-capable before first paint, so the scroll-reveal
-        styles only hide sections when something can reveal them. */}
-    <script is:inline>
-      document.documentElement.classList.add('js');
-    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
 
     <title>{title}</title>
     <meta name="description" content={description} />
@@ -51,8 +51,8 @@ const [icon16, icon32, appleIcon] = await Promise.all(
     <link rel="icon" type="image/png" sizes="32x32" href={icon32.src} />
     <link rel="apple-touch-icon" sizes="180x180" href={appleIcon.src} />
     <meta name="color-scheme" content="dark" />
-    {/* Tracks --bg-header. */}
-    <meta name="theme-color" content="#03060b" />
+    {/* Tracks --tb-bg. */}
+    <meta name="theme-color" content="#0e0d0c" />
   </head>
 
   <body>

@@ -1,0 +1,95 @@
+/* Projects tab: the card grid, and each card's color-block "hero" with its
+   headline, hook, and peeking screenshot preview. */
+
+.tb-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
+  gap: 18px;
+}
+.tb-project {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.tb-project__hero {
+  position: relative;
+  overflow: hidden;
+  height: 220px;
+  padding: 20px;
+  border-radius: 10px;
+  box-sizing: border-box;
+}
+.tb-project__hero-text {
+  position: relative;
+  z-index: 1;
+  max-width: 52%;
+}
+.tb-project__headline {
+  margin: 0;
+  font-size: clamp(20px, 2.4vw, 28px);
+  line-height: 1.08;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+}
+.tb-project__hook {
+  margin: 6px 0 0;
+  font-size: 13px;
+  font-weight: 700;
+  opacity: 0.85;
+}
+.tb-project__peek {
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+  width: 170px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--tb-paper);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.3);
+}
+.tb-project__peek-bar {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 8px;
+  background: #f0ede7;
+}
+.tb-project__peek-bar span:not(.tb-project__peek-url) {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #d8d3c8;
+}
+.tb-project__peek-url {
+  margin-left: 4px;
+  font: 9px var(--tb-mono);
+  color: var(--tb-ink-3);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.tb-project__peek-img {
+  display: block;
+  width: 100%;
+  height: 110px;
+  object-fit: cover;
+  object-position: top;
+}
+.tb-project__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+}
+.tb-project__head h3 {
+  margin: 0;
+  font-size: 24px;
+  letter-spacing: -0.03em;
+  font-weight: 900;
+}
+.tb-links {
+  display: flex;
+  gap: 16px;
+  font-weight: 700;
+  font-size: 14px;
+}

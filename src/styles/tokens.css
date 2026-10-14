@@ -1,133 +1,22 @@
 /*
  * Design tokens. No component should contain a raw hex code.
- * Contrast rule: informational text clears 4.5:1 and stays at 12px or above.
- * --size-micro is the one deliberate exception — see it below.
  */
 
 :root {
-  --bg: #0d1116;                 /* body and sidebar */
-  --bg-header: #03060b;          /* sticky header — darker, so it reads as chrome */
-  --surface: #0e1116;            /* section bodies */
-  --surface-raised: #12161d;     /* card headers, entry cards */
-  --surface-info: #0d1a2b;       /* the intro's note — a tint, not an accent */
+  --bg: #0e0d0c; /* html/body — matches the terminal+browser hero's --tb-bg */
 
-  /* Two weights: chrome that frames the whole page, then the cards inside it. */
-  --border-strong: #3d444d;      /* rules, pills, image frames, app-shell edges */
-  --border: #30353e;             /* section card borders */
-  --border-contact: #30353e;     /* contact card + secondary links */
-  --border-subtle: #161b22;      /* inner dividers — deliberately quieter */
-  --border-info: #1f3f6b;        /* the intro's note */
-  --border-hover: #3a2a5e;       /* project card on hover */
+  --text-title: #f0f6fc; /* ::selection text */
+  --text-normal: #eff5fc; /* body fallback color, overridden inside .tb */
 
-  /* Three colours. Rank by role here; get contrast from size and weight,
-     not from a new shade. */
-  --text-title: #f0f6fc;         /* section titles, card titles, active nav */
-  --text-normal: #eff5fc;        /* prose, pills, anything you read */
-  --text-quiet: #90979f;         /* metadata, labels, inactive nav — 6.3:1 */
-
-  --violet: #7b3fd4;             /* nodes, avatar, wave, active nav rule */
-  --violet-hover: #8748db;       /* lift for violet under white text */
-  --violet-light: #b08cf2;       /* indices on dark (contrast-safe) */
-  --blue: #1f6feb;               /* the handoff's action colour, see --action */
-  --blue-hover: #388bfd;
-  --amber: #f0a868;              /* the "Craft" stack category */
-  --green: #4ade80;              /* current role, status — never an action */
-
-  /* Violet rather than the handoff's blue keeps actions distinct from
-     --green, which is reserved for status. Both clear 4.5:1 under white. */
-  --action: var(--violet);
-  --action-hover: var(--violet-hover);
-
-  /* Stack categories. 8px dots, so from the bright end of the palette —
-     each clears the 3:1 non-text floor on the tile surface. */
-  --cat-languages: #7aa2ff; /* same value as --link; no other bright blue */
-  --cat-frontend: var(--violet-light);
-  --cat-data: var(--green);
-  --cat-craft: var(--amber);
+  --violet-light: #b08cf2; /* focus-visible outline */
 
   --link: #7aa2ff;
   --link-hover: #b9ccff;
   --selection: #2a3f7a;
 
-  /* GitHub's stack, and the only family on the site — no webfont, so the page
-     paints on the first frame in whatever the reader's OS already has. Set on
-     body; components inherit it rather than restating it. */
+  /* Fallback only: body sets this, but everything on the page lives inside
+     .tb, which sets its own --tb-sans/--tb-mono and never falls through. */
   --font-sans:
     -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif,
     'Apple Color Emoji', 'Segoe UI Emoji';
-
-  /* The UI ladder. Add a step here rather than a one-off px in a component. */
-  /* Below the 12px floor, so it is for the employment chip alone: two words
-     of caps that duplicate nothing — the dates already say the same thing. */
-  --size-micro: 10px;
-  --size-label: 12px;   /* smallest labels, indices, meta */
-  --size-meta: 14px;    /* nav, pills, descriptions, secondary UI */
-  --size-ui: 16px;      /* card titles and row titles */
-  --size-name: 20px;    /* the h1 — one step above a card title */
-
-  --size-prose: clamp(15px, 1.35vw, 17.5px);   /* body prose, line-height 1.7 */
-  --size-section-title: clamp(20px, 2.2vw, 28px);
-  --measure: 62ch;
-
-  --r-button: 6px;
-  --r-tile: 7px;
-  --r-thread: 8px;
-  --r-card: 10px;
-  --r-image: 12px;
-  --r-pill: 999px;
-
-  --shadow-image: 0 18px 40px rgb(0 0 0 / 0.45);
-  --shadow-card-hover: 0 18px 44px rgb(0 0 0 / 0.5);
-  --shadow-image-hover: 0 26px 54px rgb(0 0 0 / 0.55);
-
-  --gap-section: clamp(28px, 3vw, 44px);
-  /* A separator title to the section it introduces. Deliberately tight — the
-     title belongs to the card below it, not to the gap above it. */
-  --gap-title: 20px;
-  /* The floor is the phone value — a bordered card needs less air inside it
-     than a borderless one, and on a 375px screen every pixel is a character. */
-  --pad-card: clamp(14px, 2.6vw, 30px);
-  --pad-card-header-y: 16px;
-  --pad-card-header-x: clamp(14px, 2vw, 22px);
-  --pad-shell-x: clamp(18px, 3vw, 38px);
-  --pad-shell-y: clamp(11px, 1.4vw, 15px);
-  --gap-separator: clamp(14px, 1.6vw, 22px);
-
-  /*
-   * Derived: padding + button + the 1px border. Must stay exact — the sticky
-   * sidebar pins to it, and when it was a flat 57px the sidebar jumped on the
-   * first pixels of scroll and then sat behind the header. The button's height
-   * is pinned in Header.astro so this survives the padding clamp. Breaks only
-   * if the header wraps, which it does not above 360px.
-   */
-  --header-cta-h: 32px;
-  --header-h: calc(2 * var(--pad-shell-y) + var(--header-cta-h) + 1px);
-
-  /*
-   * The avatar is the widest thing in the sidebar — the name, role, nav and
-   * reviewer card are all capped to it — and the column carries no padding of
-   * its own, so the two are the same width. No clamp: a fixed circle gives a
-   * fixed column, and any extra would be dead space to the right of the nav.
-   */
-  --avatar: 230px;
-  --sidebar-w: var(--avatar);
-
-  /* The gap between the sidebar and the content — aside contributes none. */
-  --main-pad-x-max: 25px;
-  --main-pad-x: clamp(12px, 1.6vw, var(--main-pad-x-max));
-
-  --content-max: 1200px;
-
-  /* Derived so the cap holds: the shell also carries the sidebar and main's
-     padding, both at their clamp maxima by the time the shell stops growing. */
-  --shell-max: calc(var(--content-max) + 2 * var(--main-pad-x-max) + var(--sidebar-w));
-
-  --ease: cubic-bezier(0.2, 0.9, 0.25, 1);
 }
-
-/*
- * Breakpoints — repeated literally in @media queries, since custom properties
- * are not valid in media conditions.
- *   860px — sidebar hides
- *   720px — project image un-floats, timeline scrolls horizontally
- */

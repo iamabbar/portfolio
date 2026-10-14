@@ -1,0 +1,35 @@
+/* "Changed my mind" tab: each entry's old belief fades in, gets struck
+   through, then the updated belief slides in beside it. */
+
+.tb-mind {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.tb-mind li {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.tb-mind__old {
+  position: relative;
+  align-self: flex-start;
+  font-size: 14px;
+  color: var(--tb-ink-3);
+}
+.tb-mind__strike {
+  position: absolute;
+  left: 0;
+  top: 52%;
+  height: 1.5px;
+  background: var(--tb-link);
+}
+.tb-mind__new {
+  font-size: 18px;
+  line-height: 1.35;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}

@@ -1,0 +1,32 @@
+/* Contact tab: the typed-out email and the action buttons below it. */
+
+.tb-email {
+  min-height: 1em;
+  font-size: clamp(32px, 4.6vw, 64px);
+  line-height: 0.95;
+  letter-spacing: -0.045em;
+  font-weight: 900;
+  color: var(--tb-ink) !important;
+  overflow-wrap: anywhere;
+}
+.tb-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.tb-btn {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 18px;
+  border-radius: 999px;
+  border: 1px solid #d6d1c8;
+  color: var(--tb-ink) !important;
+  font-size: 14px;
+}
+.tb-btn--primary {
+  background: var(--tb-ink);
+  border-color: var(--tb-ink);
+  color: var(--tb-paper) !important;
+  font-weight: 700;
+}

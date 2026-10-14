@@ -1,0 +1,59 @@
+/* The left-hand terminal panel: title bar, typed command line, and the log
+   of previously "opened" commands. */
+
+.tb-term {
+  flex: 0 0 380px;
+  height: min(560px, 100%);
+  display: flex;
+  flex-direction: column;
+  background: var(--tb-term);
+  border: 1px solid var(--tb-term-line);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+  font-family: var(--tb-mono);
+}
+.tb-term__bar {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 36px;
+  padding: 0 12px;
+  background: var(--tb-term-bar);
+  border-bottom: 1px solid var(--tb-term-line);
+}
+.tb-term__title {
+  flex: 1;
+  text-align: center;
+  font-size: 11px;
+  color: var(--tb-term-muted);
+}
+.tb-term__spacer {
+  width: 44px;
+}
+.tb-term__body {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 10px;
+  font-size: 13px;
+  line-height: 1.55;
+}
+.tb-term__entry {
+  display: flex;
+  flex-direction: column;
+}
+.tb-term__arrow {
+  color: var(--tb-prompt);
+}
+.tb-term__dir {
+  color: var(--tb-term-muted);
+}
+.tb-term__out {
+  color: var(--tb-ok-term);
+}

@@ -32,9 +32,10 @@ export const site = {
 
 export const intro = {
   cardTitle: 'Who I am',
+  heading: 'Making things work is only half the job.',
   paragraphs: [
     "I'm a software engineer specialized in frontend, shipping products that turn complex problems into simple, AI-powered experiences.",
-    `${experienceWords} of frontend have taught me that making things work is only half the job. The other half is making them feel right, from how information is laid out to the tiny details people notice without realizing.`,
+    `The other half is making things feel right, from how information is laid out to the tiny details people notice without realizing. ${experienceWords} of frontend have taught me where that line actually is.`,
   ],
   pills: [site.location, site.timezone, 'React · TypeScript'],
   note: {

@@ -8,8 +8,6 @@
 
 html {
   scroll-behavior: smooth;
-  /* Anchors must clear the sticky header. */
-  scroll-padding-top: calc(var(--header-h) + 16px);
 }
 
 html,
@@ -83,65 +81,9 @@ button {
   border: 0;
 }
 
-@keyframes revealIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-
-@keyframes fileIn {
-  from {
-    opacity: 0;
-    transform: translateY(26px) scale(0.995);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-
-@keyframes lineIn {
-  from {
-    opacity: 0;
-    transform: translateX(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-
-/* Gated on .js (set inline in <head>) so the page stays readable if the
-   bundle never loads. */
-/* The separator titles are divs, not sections — without them here the
-   headings paint instantly above cards that are still at opacity 0. */
-.js main > section,
-.js main > .separator {
-  opacity: 0;
-}
-
-.js main > section.in-view,
-.js main > .separator.in-view {
-  animation: fileIn 0.6s var(--ease) both;
-}
-
-.js main > section.in-view [data-line] {
-  animation: lineIn 0.45s var(--ease) both;
-}
-
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
-  }
-
-  .js main > section,
-  .js main > .separator {
-    opacity: 1;
   }
 
   *,

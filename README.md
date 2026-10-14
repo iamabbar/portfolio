@@ -28,4 +28,3 @@ All copy lives in `src/data/`:
 - `career.ts` — work history timeline
 - `stack.ts` — the skills grid
 - `beliefs.ts` — "things I used to believe" entries
-- `sections.ts` — section labels, nav groups, anchor ids

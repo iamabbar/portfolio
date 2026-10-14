@@ -1,0 +1,86 @@
+/* The page-content area: the scrollable container itself, generic
+   typography shared across every tab's template, and the Home tab's own
+   bits (avatar, name/role row) since they're too small to need their own
+   file. Per-tab-specific styling lives in its own sibling file instead. */
+
+.tb-page {
+  flex: 1;
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding: clamp(24px, 4vw, 48px);
+}
+.tb-page__center {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 18px;
+}
+.tb-stack-col {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.tb-narrow {
+  max-width: 640px;
+}
+
+.tb-display {
+  margin: 0;
+  font-size: clamp(48px, 6vw, 92px);
+  line-height: 0.9;
+  letter-spacing: -0.05em;
+  font-weight: 900;
+}
+.tb-h2 {
+  margin: 0;
+  font-size: clamp(30px, 3.4vw, 46px);
+  line-height: 1.02;
+  letter-spacing: -0.04em;
+  font-weight: 900;
+}
+.tb-lead {
+  margin: 0;
+  font-size: 19px;
+  line-height: 1.45;
+  color: var(--tb-ink-2);
+}
+.tb-lead.tb-ink {
+  color: var(--tb-ink);
+}
+.tb-body {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--tb-ink-2);
+}
+.tb-note {
+  margin: 0;
+  padding: 14px 16px;
+  border-radius: 8px;
+  background: #fff1e9;
+  font-size: 15px;
+  line-height: 1.5;
+  color: #5a2a14;
+}
+
+/* home */
+.tb-home-role {
+  margin-bottom: 0;
+}
+.tb-home-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+.tb-avatar {
+  flex: 0 0 auto;
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid var(--tb-line);
+}

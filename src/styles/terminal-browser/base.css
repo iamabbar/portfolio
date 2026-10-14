@@ -1,0 +1,144 @@
+/* Root palette, shared primitives, and animations used across both the
+   terminal panel and the browser mock. Everything else in this directory
+   builds on these. */
+
+.tb {
+  --tb-bg: #0e0d0c;
+  --tb-fg: #f1ede6;
+  --tb-term: #161412;
+  --tb-term-bar: #1d1a17;
+  --tb-term-line: #2c2824;
+  --tb-term-muted: #9c958b;
+  --tb-prompt: #ff7a50;
+  --tb-ok-term: #8fd19e;
+
+  --tb-paper: #fbfaf7;
+  --tb-tabbar: #e9e5de;
+  --tb-ink: #1a1816;
+  --tb-ink-2: #4a4640;
+  --tb-ink-3: #6b655c;
+  --tb-line: #e6e2da;
+  --tb-accent: #ff6a3d;
+  --tb-link: #d9411a;
+  --tb-ok: #1d7a45;
+
+  --tb-sans: 'Schibsted Grotesk', system-ui, sans-serif;
+  --tb-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  background: var(--tb-bg);
+  color: var(--tb-fg);
+  font-family: var(--tb-sans);
+}
+
+.tb a {
+  color: var(--tb-link);
+  text-decoration: none;
+}
+.tb a:hover {
+  color: #a52f10;
+}
+
+.tb-track {
+  position: relative;
+}
+
+.tb-stage {
+  position: sticky;
+  top: 0;
+  height: min(100vh, 920px);
+  min-height: 620px;
+  overflow: hidden;
+  box-sizing: border-box;
+  padding: 32px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  background:
+    radial-gradient(1000px 600px at 70% 50%, rgba(255, 106, 61, var(--tb-glow, 0.05)), transparent 70%),
+    var(--tb-bg);
+}
+
+/* ---------------- shared bits ---------------- */
+.tb-lights {
+  display: flex;
+  gap: 7px;
+}
+.tb-lights span {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+}
+.l-red {
+  background: #ff5f57;
+}
+.l-yellow {
+  background: #febc2e;
+}
+.l-green {
+  background: #28c840;
+}
+
+.tb-mono {
+  font: 12px var(--tb-mono);
+}
+.tb-muted {
+  color: var(--tb-ink-3);
+}
+.tb-ok {
+  color: var(--tb-ok);
+}
+.tb-accent {
+  color: var(--tb-accent);
+}
+.tb-link-color {
+  color: var(--tb-link);
+}
+
+@keyframes tb-blink {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes tb-tabin {
+  from {
+    max-width: 0;
+    opacity: 0;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  to {
+    max-width: 200px;
+    opacity: 1;
+  }
+}
+@keyframes tb-shimmer {
+  from {
+    background-position: -400px 0;
+  }
+  to {
+    background-position: 400px 0;
+  }
+}
+
+.tb-cursor {
+  display: inline-block;
+  width: 8px;
+  height: 1.1em;
+  margin-left: 2px;
+  background: var(--tb-prompt);
+  vertical-align: -0.2em;
+  animation: tb-blink 1s step-end infinite;
+}
+
+/* every revealed element eases between scroll steps */
+.tb-page [style*='opacity'] {
+  transition:
+    opacity 0.25s ease-out,
+    transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+}

@@ -1,0 +1,26 @@
+/* Stack tab: the grid of tech + one-line-opinion cards. */
+
+.tb-cards {
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr));
+  gap: 12px;
+}
+.tb-card {
+  padding: 14px 16px;
+  border-radius: 10px;
+  border: 1px solid var(--tb-line);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.tb-card dt {
+  font-weight: 700;
+  font-size: 16px;
+}
+.tb-card dd {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--tb-ink-2);
+}

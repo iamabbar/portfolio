@@ -6,14 +6,6 @@ export type StackItem = {
   opinion: string;
 };
 
-/** The legend renders from this, so a new category cannot go unlabelled. */
-export const categories: Record<StackCategory, { label: string; color: string }> = {
-  languages: { label: 'Languages', color: 'var(--cat-languages)' },
-  frontend: { label: 'Frontend', color: 'var(--cat-frontend)' },
-  data: { label: 'State, data & backend', color: 'var(--cat-data)' },
-  craft: { label: 'Craft', color: 'var(--cat-craft)' },
-};
-
 export const stack: StackItem[] = [
   {
     name: 'TypeScript',

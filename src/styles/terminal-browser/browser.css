@@ -1,0 +1,164 @@
+/* The browser mock's chrome: the tab bar, tabs, address bar, loading
+   progress bar, the loading skeleton, and the floating "Next" nudge — the
+   frame things render inside of, not the page content itself. */
+
+.tb-browser-wrap {
+  flex: 0 1 900px;
+  height: min(680px, 100%);
+  overflow: hidden;
+  border-radius: 12px;
+  transition:
+    flex-basis 0.25s ease-out,
+    opacity 0.25s;
+}
+.tb-browser {
+  position: relative;
+  min-width: min(640px, 100%);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: var(--tb-paper);
+  color: var(--tb-ink);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 40px 120px rgba(0, 0, 0, 0.6);
+}
+.tb-browser__tabbar {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+  padding: 8px 12px 0;
+  background: var(--tb-tabbar);
+}
+.tb-browser__lights {
+  padding-bottom: 12px;
+}
+.tb-browser__tabs {
+  display: flex;
+  gap: 2px;
+  overflow-x: auto;
+  min-width: 0;
+  scrollbar-width: none;
+}
+
+.tb-tab {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 34px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: 8px 8px 0 0;
+  background: transparent;
+  color: var(--tb-ink-3);
+  font: 500 12px var(--tb-sans);
+  white-space: nowrap;
+  overflow: hidden;
+  cursor: pointer;
+  animation: tb-tabin 0.45s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+.tb-tab.is-active {
+  background: var(--tb-paper);
+  color: var(--tb-ink);
+}
+.tb-tab:focus-visible {
+  outline: 2px solid var(--tb-accent);
+  outline-offset: -2px;
+}
+.tb-tab__favicon {
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  background: #c9c3b8;
+}
+.tb-tab.is-active .tb-tab__favicon {
+  background: var(--tb-accent);
+}
+
+.tb-browser__urlbar {
+  flex: 0 0 auto;
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 14px;
+  background: var(--tb-paper);
+  border-bottom: 1px solid var(--tb-line);
+}
+.tb-browser__nav {
+  font-size: 14px;
+  color: #8a847a;
+}
+.tb-browser__url {
+  flex: 1;
+  padding: 6px 12px;
+  border-radius: 8px;
+  background: #f0ede7;
+  font: 12px var(--tb-mono);
+  color: var(--tb-ink-2);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.tb-browser__progress {
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  height: 2px;
+  background: var(--tb-accent);
+  transition:
+    width 0.15s linear,
+    opacity 0.3s;
+}
+
+/* loading skeleton, shown in the page area before a tab is ready */
+.tb-skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.tb-sk {
+  border-radius: 6px;
+  background: linear-gradient(90deg, #ece9e2 0, #f6f4ef 50%, #ece9e2 100%);
+  background-size: 800px 100%;
+  animation: tb-shimmer 1.2s linear infinite;
+}
+
+/* next-tab nudge, in case the tabs themselves go unnoticed */
+.tb-next {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 16px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--tb-accent);
+  color: #241208;
+  font: 700 13px var(--tb-sans);
+  white-space: nowrap;
+  cursor: pointer;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.25);
+  opacity: 0;
+  transform: translateY(8px);
+  pointer-events: none;
+  transition:
+    opacity 0.25s ease-out,
+    transform 0.25s ease-out;
+}
+.tb-next.is-visible {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+.tb-next:hover {
+  background: #ff7f55;
+}
+.tb-next:focus-visible {
+  outline: 2px solid var(--tb-ink);
+  outline-offset: 2px;
+}
