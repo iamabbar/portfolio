@@ -1,5 +1,4 @@
-/* The left-hand terminal panel: title bar, typed command line, and the log
-   of previously "opened" commands. */
+/* The left-hand terminal panel: title bar, typed command, and the log. */
 
 .tb-term {
   flex: 0 0 380px;

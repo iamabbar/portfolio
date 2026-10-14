@@ -1,6 +1,4 @@
-/* The browser mock's chrome: the tab bar, tabs, address bar, loading
-   progress bar, the loading skeleton, and the floating "Next" nudge — the
-   frame things render inside of, not the page content itself. */
+/* The browser mock's chrome: tab bar, address bar, progress bar, skeleton, Next nudge. */
 
 .tb-browser-wrap {
   flex: 0 1 900px;

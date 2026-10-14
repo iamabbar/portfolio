@@ -1,7 +1,4 @@
-/* The page-content area: the scrollable container itself, generic
-   typography shared across every tab's template, and the Home tab's own
-   bits (avatar, name/role row) since they're too small to need their own
-   file. Per-tab-specific styling lives in its own sibling file instead. */
+/* The page-content area: shared typography across tabs, plus Home's own bits. */
 
 .tb-page {
   flex: 1;

@@ -12,17 +12,7 @@ export type Scene = {
   cmd: string;
 };
 
-/*
- * `start` is a fraction of the track height set in TerminalBrowser.astro
- * (2520px). Each scene's own share of that track is ~320px (600px for home,
- * which types a longer command) — sized to match how much of it is actually
- * scroll-driven: typing + the loading skeleton (~90px worth at these
- * lengths), plus a short dwell buffer after the reveal finishes. The reveal
- * itself is time-based, not scroll-based (REVEAL_MS in
- * src/scripts/terminal-browser.ts), so it doesn't need its own scroll budget
- * — padding the track further here would just be dead scroll with nothing
- * on screen changing, which is the bug this sizing avoids.
- */
+// `start` is a fraction of the 2520px track height set in TerminalBrowser.astro.
 export const scenes: Scene[] = [
   { id: 'home', start: 0, tab: 'Home', path: 'abbar.dev', cmd: 'open abbar.dev' },
   { id: 'about', start: 0.2381, tab: 'About', path: 'abbar.dev/about', cmd: 'open -t abbar.dev/about' },

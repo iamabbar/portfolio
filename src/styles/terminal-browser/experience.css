@@ -1,5 +1,4 @@
-/* Experience tab: the job list. A CSS grid with subgrid rows so every row's
-   org/role/years columns line up, regardless of how long each org name is. */
+/* Experience tab: subgrid rows so org/role/years columns line up across jobs. */
 
 .tb-list {
   margin: 0;

@@ -1,5 +1,4 @@
-/* "Changed my mind" tab: each entry's old belief fades in, gets struck
-   through, then the updated belief slides in beside it. */
+/* "Changed my mind" tab: old belief strikes through, new one slides in. */
 
 .tb-mind {
   margin: 0;

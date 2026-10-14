@@ -1,6 +1,4 @@
-/* Root palette, shared primitives, and animations used across both the
-   terminal panel and the browser mock. Everything else in this directory
-   builds on these. */
+/* Root palette and shared primitives everything else here builds on. */
 
 .tb {
   --tb-bg: #0e0d0c;

@@ -29,9 +29,7 @@ export type Project = {
   hook: string;
   /** Fake address-bar text for the "peeking" screenshot preview. */
   previewUrl: string;
-  /** The card's background + text color, derived from the screenshot's own
-      dominant color (see `themeFrom` below) rather than a hand-picked value —
-      so it reads as "this project's color", not a generic brand accent. */
+  /** Background + text color, derived from the screenshot's dominant color. */
   theme: { bg: string; fg: string };
   /** One <p> each. */
   summary: string[];
@@ -43,25 +41,14 @@ export type Project = {
 const INK = '#1a1816';
 const PAPER = '#fbfaf7';
 
-/** Cycled for image-less entries (text-only cards, or the temp placeholders
-    below) so they don't all render as the same flat block. */
+/** Cycled for image-less entries, so they don't all render as the same flat block. */
 const FALLBACK_THEMES: Project['theme'][] = [
   { bg: INK, fg: PAPER },
   { bg: '#3a2a5e', fg: PAPER },
   { bg: '#1f6feb', fg: PAPER },
 ];
 
-/**
- * The dominant color of a screenshot, used as that project's card color.
- * `ImageMetadata.src` isn't a filesystem path in dev or build (it's a dev
- * server URL or a hashed output path), so there's no way to hand sharp the
- * already-imported image — it reads the original file itself instead.
- *
- * Resolved from `process.cwd()` rather than `import.meta.url`: this module
- * gets bundled into a chunk under `dist/` during `astro build`, which moves
- * "this file's own location" away from the source tree, so a path relative
- * to it no longer points at `src/assets`. The project root doesn't move.
- */
+// process.cwd()-relative — import.meta.url breaks once this is bundled for build.
 async function themeFrom(assetFilename: string): Promise<Project['theme']> {
   const fsPath = path.join(process.cwd(), 'src/assets', assetFilename);
   const { dominant } = await sharp(fsPath).stats();
