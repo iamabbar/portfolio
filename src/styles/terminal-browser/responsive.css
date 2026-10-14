@@ -1,9 +1,18 @@
-/* Cross-cutting overrides that touch multiple of the files in this
-   directory, so they're kept separate rather than folded into any one
-   of them. */
+/* Cross-cutting overrides spanning multiple files in this directory. */
 
-@media (max-width: 820px) {
+/* Triggers on narrow portrait phones AND short landscape ones — stacks the
+   layout and drops the sticky/clipped desktop model so nothing gets cut off
+   on a screen height we can't predict (see isCompact() in terminal-browser.ts). */
+@media (max-width: 820px), (max-height: 500px) {
+  #tb-track {
+    height: auto !important;
+  }
   .tb-stage {
+    position: static;
+    height: auto;
+    min-height: 100vh;
+    min-height: 100dvh;
+    overflow: visible;
     flex-direction: column;
     justify-content: flex-start;
     padding: 16px 12px;
@@ -18,12 +27,20 @@
     flex: 1 1 auto !important;
     width: 100%;
     max-width: 100%;
+    height: auto;
+    /* Fallback floor; JS sets the real height. */
+    min-height: calc(100vh - 194px);
+    min-height: calc(100dvh - 194px);
+    overflow: visible;
   }
   .tb-browser {
     min-width: 0;
+    height: auto;
+    min-height: 100%;
   }
   .tb-page {
     padding: 20px 16px;
+    overflow: visible;
   }
   .tb-next {
     right: 12px;

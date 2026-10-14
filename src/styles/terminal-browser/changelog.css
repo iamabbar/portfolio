@@ -14,17 +14,16 @@
   gap: 2px;
 }
 .tb-mind__old {
-  position: relative;
   align-self: flex-start;
   font-size: 14px;
   color: var(--tb-ink-3);
+  text-decoration-line: line-through;
+  text-decoration-color: transparent;
+  text-decoration-thickness: 1.5px;
+  transition: text-decoration-color 0.2s ease-out;
 }
-.tb-mind__strike {
-  position: absolute;
-  left: 0;
-  top: 52%;
-  height: 1.5px;
-  background: var(--tb-link);
+.tb-mind__old.is-struck {
+  text-decoration-color: var(--tb-link);
 }
 .tb-mind__new {
   font-size: 18px;

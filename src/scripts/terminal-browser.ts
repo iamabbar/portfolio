@@ -1,10 +1,4 @@
-/**
- * The terminal+browser hero's scroll-driven engine. Pulled out of
- * TerminalBrowser.astro so the component file is template+CSS only —
- * everything here reaches into the IDs/classes that component renders, so
- * the two only make sense read together, but at least this part is scannable
- * on its own instead of buried after a thousand lines of CSS.
- */
+// Engine for the terminal+browser hero. Reaches into IDs/classes from TerminalBrowser.astro.
 
 type TerminalBrowserData = {
   PROFILE: Record<string, string>;
@@ -18,8 +12,6 @@ type TerminalBrowserData = {
 
 declare global {
   interface Window {
-    /** Handed off from the `define:vars` script in TerminalBrowser.astro,
-        which is the only place that can see the frontmatter-computed data. */
     __TB_DATA__: TerminalBrowserData;
   }
 }
@@ -27,10 +19,7 @@ declare global {
 export function initTerminalBrowser(data: TerminalBrowserData) {
   const { PROFILE, ABOUT, PROJECTS, EXPERIENCE, STACK, CHANGED_MY_MIND, SCENES } = data;
 
-  /* ================================================================
-     PAGE TEMPLATES — one per scene.
-     data-r="start,dur" marks an element that fades/slides in during the reveal phase.
-     ================================================================ */
+  // data-r="start,dur" marks an element that fades/slides in during the reveal phase.
   const esc = (s: unknown) =>
     String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c] as string);
 
@@ -113,7 +102,7 @@ export function initTerminalBrowser(data: TerminalBrowserData) {
         ${CHANGED_MY_MIND.map(
           ([before, now], i) => `
           <li data-mind="${i}">
-            <span class="tb-mind__old">${esc(before)}<span class="tb-mind__strike"></span></span>
+            <span class="tb-mind__old">${esc(before)}</span>
             <span class="tb-mind__new">${esc(now)}</span>
           </li>`,
         ).join('')}
@@ -138,13 +127,11 @@ export function initTerminalBrowser(data: TerminalBrowserData) {
       <div class="tb-sk" style="height:160px;width:100%"></div>
     </div>`;
 
-  /* ================================================================
-     ENGINE
-     ================================================================ */
   const $ = (id: string) => document.getElementById(id)!;
   const track = $('tb-track'),
     stage = $('tb-stage'),
-    wrap = $('tb-wrap');
+    wrap = $('tb-wrap'),
+    term = $('tb-term');
   const logEl = $('tb-log'),
     typedEl = $('tb-typed'),
     tabsEl = $('tb-tabs');
@@ -159,10 +146,7 @@ export function initTerminalBrowser(data: TerminalBrowserData) {
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   const BOOT_MS = 1800;
-  /* Once a page is ready, it reveals itself over this much real time,
-     regardless of whether the user keeps scrolling — otherwise stopping
-     right as the skeleton disappears freezes everything at 0 opacity
-     until more scroll input arrives. */
+  // Reveal is time-based, not scroll-based, so it finishes even if you stop scrolling.
   const REVEAL_MS = 500;
   const t0 = performance.now();
   let lastLogKey = '',
@@ -178,13 +162,30 @@ export function initTerminalBrowser(data: TerminalBrowserData) {
     return total > 0 ? clamp(-rect.top / total) : 0;
   }
 
-  /**
-   * Jumps instantly, no scroll animation — clicking a tab (or the Next
-   * button) should snap straight there, not fly past every scene in
-   * between. The animated, "scroll past each scene" experience is still
-   * what you get from actually scrolling by hand.
-   */
+  // Matches responsive.css: below this, .tb-stage isn't sticky, so tabs switch on tap instead.
+  const isCompact = () => window.matchMedia('(max-width: 820px), (max-height: 500px)').matches;
+
+  // Measures real pixels instead of trusting flex-grow/percentage heights.
+  function fitCompactBrowser() {
+    if (!isCompact()) {
+      wrap.style.height = '';
+      return;
+    }
+    const stageStyle = getComputedStyle(stage);
+    const padTop = parseFloat(stageStyle.paddingTop) || 0;
+    const padBottom = parseFloat(stageStyle.paddingBottom) || 0;
+    const gapPx = parseFloat(stageStyle.rowGap || stageStyle.gap) || 0;
+    const available = stage.clientHeight - padTop - padBottom - term.offsetHeight - gapPx;
+    wrap.style.height = Math.max(available, 0) + 'px';
+  }
+
+  // Jumps instantly rather than flying past every scene in between.
   function goTo(sceneIndex: number) {
+    if (isCompact()) {
+      curIdx = sceneIndex;
+      schedule();
+      return;
+    }
     const scene = SCENES[sceneIndex];
     const end = sceneEnd(sceneIndex);
     const target = scene.start + 0.99 * (end - scene.start);
@@ -199,23 +200,75 @@ export function initTerminalBrowser(data: TerminalBrowserData) {
     if (curIdx + 1 < SCENES.length) goTo(curIdx + 1);
   });
 
+  // Compact mode has no scroll-linked track, so "scroll to advance" is
+  // reimplemented as a gesture check: hit the end of this tab's content and
+  // keep scrolling the same direction → move to the next/previous tab.
+  const BOUNDARY_COOLDOWN_MS = 700;
+  let lastBoundaryNav = 0;
+  function tryBoundaryNav(deltaY: number) {
+    if (!isCompact()) return;
+    const now = performance.now();
+    if (now - lastBoundaryNav < BOUNDARY_COOLDOWN_MS) return;
+    const doc = document.documentElement;
+    const atBottom = window.scrollY + window.innerHeight >= doc.scrollHeight - 2;
+    const atTop = window.scrollY <= 1;
+    if (deltaY > 0 && atBottom && curIdx < SCENES.length - 1) {
+      lastBoundaryNav = now;
+      goTo(curIdx + 1);
+    } else if (deltaY < 0 && atTop && curIdx > 0) {
+      lastBoundaryNav = now;
+      goTo(curIdx - 1);
+    }
+  }
+  window.addEventListener('wheel', (e) => tryBoundaryNav(e.deltaY), { passive: true });
+  let touchStartY = 0;
+  window.addEventListener(
+    'touchstart',
+    (e) => {
+      touchStartY = e.touches[0].clientY;
+    },
+    { passive: true },
+  );
+  window.addEventListener(
+    'touchend',
+    (e) => tryBoundaryNav(touchStartY - e.changedTouches[0].clientY),
+    { passive: true },
+  );
+
   function render() {
     raf = 0;
-    const p = progress();
-    const boot = reduced ? 1 : Math.min(1, (performance.now() - t0) / BOOT_MS);
+    const compact = isCompact();
+    const boot = reduced || compact ? 1 : Math.min(1, (performance.now() - t0) / BOOT_MS);
 
-    let idx = 0;
-    SCENES.forEach((s, i) => {
-      if (p >= s.start) idx = i;
-    });
+    let idx: number, tk: number, lk: number, ready: boolean, p: number, t: number, typeDur: number;
+
+    if (compact) {
+      idx = curIdx;
+      p = t = 0;
+      typeDur = 0.14;
+      tk = 1;
+      lk = 1;
+      ready = true;
+    } else {
+      p = progress();
+      idx = 0;
+      SCENES.forEach((s, i) => {
+        if (p >= s.start) idx = i;
+      });
+      const sceneCur = SCENES[idx];
+      t = clamp((p - sceneCur.start) / (sceneEnd(idx) - sceneCur.start));
+      if (idx === 0) t = Math.max(t, boot * 0.8);
+      if (reduced) t = 1;
+
+      const loadDur = 0.14;
+      typeDur = idx === 0 ? 0.3 : 0.14;
+      tk = clamp(t / typeDur);
+      lk = clamp((t - typeDur) / loadDur);
+      ready = lk >= 1;
+    }
     const cur = SCENES[idx];
-    let t = clamp((p - cur.start) / (sceneEnd(idx) - cur.start));
-    if (idx === 0) t = Math.max(t, boot * 0.8);
-    if (reduced) t = 1;
 
-    // entering a new scene: snap the loading bar back to 0% with no
-    // transition first, so it doesn't visibly retract from the previous
-    // scene's 100% before growing forward again
+    // new scene: snap the loading bar to 0% instantly, no retract animation
     if (idx !== lastIdx) {
       lastIdx = idx;
       progEl.style.transition = 'none';
@@ -224,17 +277,13 @@ export function initTerminalBrowser(data: TerminalBrowserData) {
       progEl.style.transition = '';
     }
 
-    const typeDur = idx === 0 ? 0.3 : 0.14,
-      loadDur = 0.14;
-    const tk = clamp(t / typeDur);
-    const lk = clamp((t - typeDur) / loadDur);
-    const ready = lk >= 1;
-
-    // background glow + browser grow-in
-    stage.style.setProperty('--tb-glow', (0.05 + p * 0.18).toFixed(3));
-    const grow = idx === 0 && !reduced ? clamp((t - 0.3) / 0.25) : 1;
-    wrap.style.flexBasis = Math.round(900 * grow) + 'px';
-    wrap.style.opacity = String(grow);
+    // background glow + browser grow-in (desktop only)
+    if (!compact) {
+      stage.style.setProperty('--tb-glow', (0.05 + p * 0.18).toFixed(3));
+      const grow = idx === 0 && !reduced ? clamp((t - 0.3) / 0.25) : 1;
+      wrap.style.flexBasis = Math.round(900 * grow) + 'px';
+      wrap.style.opacity = String(grow);
+    }
 
     // terminal log (rebuild only when it changes)
     const logKey = idx + '|' + (tk >= 1) + '|' + ready;
@@ -257,7 +306,7 @@ export function initTerminalBrowser(data: TerminalBrowserData) {
     progEl.style.width = Math.round(clamp(lk) * 100) + '%';
     progEl.style.opacity = ready ? '0' : '1';
 
-    // tabs: all open from the start (click any one to jump straight to it, no scrolling required)
+    // tabs: all open from the start
     const visible = SCENES;
     for (let i = tabsEl.children.length; i < visible.length; i++) {
       const s = visible[i];
@@ -283,9 +332,7 @@ export function initTerminalBrowser(data: TerminalBrowserData) {
       if (nextIdx !== -1) nextLabelEl.textContent = SCENES[nextIdx].tab;
     }
 
-    // page: skeleton for the whole pre-ready stretch (typing included —
-    // no blank frame while the command is still being typed), scene
-    // template once ready
+    // skeleton for the whole pre-ready stretch, scene template once ready
     const pageKey = cur.id + '|' + (ready ? 'R' : 'L');
     if (pageKey !== lastPageKey) {
       lastPageKey = pageKey;
@@ -293,9 +340,6 @@ export function initTerminalBrowser(data: TerminalBrowserData) {
       if (ready) revealStart = performance.now();
     }
 
-    // reveal driven by real time since the page mounted, not by further
-    // scrolling — so it always finishes on its own even if you stop
-    // scrolling the instant the skeleton disappears
     const pt = ready ? (reduced ? 1 : clamp((performance.now() - revealStart) / REVEAL_MS)) : 0;
 
     if (ready) {
@@ -306,12 +350,11 @@ export function initTerminalBrowser(data: TerminalBrowserData) {
         el.style.opacity = String(k);
         el.style.transform = `translateY(${((1 - k) * 24).toFixed(1)}px)`;
       });
-      // "changed my mind": old fades in → red strike draws → new slides in
+      // "changed my mind": old fades in → gets struck through → new slides in
       pageEl.querySelectorAll<HTMLElement>('[data-mind]').forEach((li) => {
         const s0 = 0.04 + parseInt(li.dataset.mind!, 10) * 0.15;
         (li.children[0] as HTMLElement).style.opacity = String(clamp((pt - s0) / 0.04));
-        (li.querySelector('.tb-mind__strike') as HTMLElement).style.width =
-          clamp((pt - s0 - 0.03) / 0.05) * 100 + '%';
+        (li.children[0] as HTMLElement).classList.toggle('is-struck', pt - s0 > 0.03);
         const nk = clamp((pt - s0 - 0.07) / 0.05);
         (li.children[1] as HTMLElement).style.opacity = String(nk);
         (li.children[1] as HTMLElement).style.transform = `translateY(${((1 - nk) * 10).toFixed(1)}px)`;
@@ -321,8 +364,6 @@ export function initTerminalBrowser(data: TerminalBrowserData) {
       if (em) em.textContent = PROFILE.email.slice(0, Math.round(PROFILE.email.length * clamp((pt - 0.1) / 0.4)));
     }
 
-    // keep animating while the first command auto-types, or while a
-    // just-mounted page is still revealing itself
     if (boot < 1 || (ready && pt < 1)) schedule();
   }
 
@@ -331,6 +372,10 @@ export function initTerminalBrowser(data: TerminalBrowserData) {
   }
 
   window.addEventListener('scroll', schedule, { passive: true });
-  window.addEventListener('resize', schedule);
+  window.addEventListener('resize', () => {
+    fitCompactBrowser();
+    schedule();
+  });
+  fitCompactBrowser();
   render();
 }
