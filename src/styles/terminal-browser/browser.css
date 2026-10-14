@@ -30,7 +30,7 @@
   background: var(--tb-tabbar);
 }
 .tb-browser__lights {
-  padding-bottom: 12px;
+  padding-bottom: 17px;
 }
 .tb-browser__tabs {
   display: flex;
@@ -45,13 +45,13 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  min-height: 34px;
+  min-height: 44px;
   padding: 0 14px;
   border: 0;
   border-radius: 8px 8px 0 0;
   background: transparent;
   color: var(--tb-ink-3);
-  font: 500 12px var(--tb-sans);
+  font: 500 13px var(--tb-sans);
   white-space: nowrap;
   overflow: hidden;
   cursor: pointer;
