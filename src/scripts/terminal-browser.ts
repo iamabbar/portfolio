@@ -160,6 +160,7 @@ export function initTerminalBrowser(data: TerminalBrowserData) {
       const active = i === curIdx;
       b.classList.toggle('is-active', active);
       b.setAttribute('aria-selected', String(active));
+      if (active) (b as HTMLElement).scrollIntoView({ block: 'nearest', inline: 'nearest' });
     });
   }
 
