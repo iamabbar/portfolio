@@ -80,44 +80,41 @@ const CHANGED_MY_MIND = beliefs.map((belief) => [belief.before, belief.after]);
 ---
 
 <div class="tb">
-  <div id="tb-track" class="tb-track" style="height: 2520px">
-    <div id="tb-stage" class="tb-stage">
-      <section id="tb-term" class="tb-term" aria-label="Terminal">
-        <div class="tb-term__bar">
-          <div class="tb-lights" aria-hidden="true">
+  <div id="tb-stage" class="tb-stage">
+    <section id="tb-term" class="tb-term" aria-label="Terminal">
+      <div class="tb-term__bar">
+        <div class="tb-lights" aria-hidden="true">
+          <span class="l-red"></span><span class="l-yellow"></span><span class="l-green"></span>
+        </div>
+        <span class="tb-term__title">zsh — abbar</span>
+        <span class="tb-term__spacer"></span>
+      </div>
+      <div class="tb-term__body" aria-live="polite">
+        <div id="tb-log" style="display: contents"></div>
+        <div>
+          <span class="tb-term__arrow">➜</span> <span class="tb-term__dir">~</span>
+          <span id="tb-typed"></span><span class="tb-cursor" aria-hidden="true"></span>
+        </div>
+      </div>
+    </section>
+
+    <div class="tb-browser-wrap">
+      <section class="tb-browser" aria-label="Browser">
+        <div class="tb-browser__tabbar">
+          <div class="tb-lights tb-browser__lights" aria-hidden="true">
             <span class="l-red"></span><span class="l-yellow"></span><span class="l-green"></span>
           </div>
-          <span class="tb-term__title">zsh — abbar</span>
-          <span class="tb-term__spacer"></span>
+          <div id="tb-tabs" class="tb-browser__tabs" role="tablist" aria-label="Pages"></div>
         </div>
-        <div class="tb-term__body" aria-live="polite">
-          <div id="tb-log" style="display: contents"></div>
-          <div>
-            <span class="tb-term__arrow">➜</span> <span class="tb-term__dir">~</span>
-            <span id="tb-typed"></span><span class="tb-cursor" aria-hidden="true"></span>
-          </div>
+        <div class="tb-browser__urlbar">
+          <span class="tb-browser__nav" aria-hidden="true">‹ ›</span>
+          <div id="tb-url" class="tb-browser__url">https://</div>
         </div>
+        <div id="tb-page" class="tb-page"></div>
+        <button id="tb-next" class="tb-next" type="button">
+          Next <span id="tb-next-label"></span> <span aria-hidden="true">→</span>
+        </button>
       </section>
-
-      <div id="tb-wrap" class="tb-browser-wrap">
-        <section class="tb-browser" aria-label="Browser">
-          <div class="tb-browser__tabbar">
-            <div class="tb-lights tb-browser__lights" aria-hidden="true">
-              <span class="l-red"></span><span class="l-yellow"></span><span class="l-green"></span>
-            </div>
-            <div id="tb-tabs" class="tb-browser__tabs" role="tablist" aria-label="Pages"></div>
-          </div>
-          <div class="tb-browser__urlbar">
-            <span class="tb-browser__nav" aria-hidden="true">‹ ›</span>
-            <div id="tb-url" class="tb-browser__url">https://</div>
-            <div id="tb-progress" class="tb-browser__progress"></div>
-          </div>
-          <div id="tb-page" class="tb-page"></div>
-          <button id="tb-next" class="tb-next" type="button">
-            Next <span id="tb-next-label"></span> <span aria-hidden="true">→</span>
-          </button>
-        </section>
-      </div>
     </div>
   </div>
 </div>

@@ -100,30 +100,6 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.tb-browser__progress {
-  position: absolute;
-  left: 0;
-  bottom: -1px;
-  height: 2px;
-  background: var(--tb-accent);
-  transition:
-    width 0.15s linear,
-    opacity 0.3s;
-}
-
-/* loading skeleton, shown in the page area before a tab is ready */
-.tb-skeleton {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-.tb-sk {
-  border-radius: 6px;
-  background: linear-gradient(90deg, #ece9e2 0, #f6f4ef 50%, #ece9e2 100%);
-  background-size: 800px 100%;
-  animation: tb-shimmer 1.2s linear infinite;
-}
-
 /* next-tab nudge, in case the tabs themselves go unnoticed */
 .tb-next {
   position: absolute;

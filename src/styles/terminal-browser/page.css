@@ -6,6 +6,20 @@
   overflow-x: hidden;
   overflow-y: auto;
   padding: clamp(24px, 4vw, 48px);
+  scrollbar-gutter: stable;
+  scrollbar-width: thin;
+  scrollbar-color: var(--tb-ink-3) var(--tb-tabbar);
+}
+.tb-page::-webkit-scrollbar {
+  width: 10px;
+}
+.tb-page::-webkit-scrollbar-track {
+  background: var(--tb-tabbar);
+}
+.tb-page::-webkit-scrollbar-thumb {
+  background: var(--tb-ink-3);
+  border-radius: 999px;
+  border: 2px solid var(--tb-tabbar);
 }
 .tb-page__center {
   height: 100%;

@@ -36,15 +36,9 @@
   color: #a52f10;
 }
 
-.tb-track {
-  position: relative;
-}
-
 .tb-stage {
-  position: sticky;
-  top: 0;
   height: min(100vh, 920px);
-  min-height: 620px;
+  min-height: 420px;
   overflow: hidden;
   box-sizing: border-box;
   padding: 32px 24px;
@@ -53,7 +47,7 @@
   justify-content: center;
   gap: 20px;
   background:
-    radial-gradient(1000px 600px at 70% 50%, rgba(255, 106, 61, var(--tb-glow, 0.05)), transparent 70%),
+    radial-gradient(1000px 600px at 70% 50%, rgba(255, 106, 61, 0.12), transparent 70%),
     var(--tb-bg);
 }
 
@@ -115,15 +109,6 @@
     opacity: 1;
   }
 }
-@keyframes tb-shimmer {
-  from {
-    background-position: -400px 0;
-  }
-  to {
-    background-position: 400px 0;
-  }
-}
-
 .tb-cursor {
   display: inline-block;
   width: 8px;
