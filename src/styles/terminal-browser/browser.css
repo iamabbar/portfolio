@@ -100,22 +100,15 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
-/* next-tab nudge, in case the tabs themselves go unnoticed */
-.tb-next {
+/* prev/next stepper pill, in case the tabs themselves go unnoticed */
+.tb-stepper {
   position: absolute;
   right: 20px;
   bottom: 20px;
   display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 10px 16px;
-  border: 0;
+  align-items: stretch;
   border-radius: 999px;
   background: var(--tb-accent);
-  color: #241208;
-  font: 700 13px var(--tb-sans);
-  white-space: nowrap;
-  cursor: pointer;
   box-shadow: 0 10px 24px rgba(0, 0, 0, 0.25);
   opacity: 0;
   transform: translateY(8px);
@@ -124,15 +117,46 @@
     opacity 0.25s ease-out,
     transform 0.25s ease-out;
 }
-.tb-next.is-visible {
+.tb-stepper.is-visible {
   opacity: 1;
   transform: none;
   pointer-events: auto;
 }
-.tb-next:hover {
-  background: #ff7f55;
+.tb-stepper__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 16px;
+  border: 0;
+  background: transparent;
+  color: #241208;
+  font: 700 13px var(--tb-sans);
+  white-space: nowrap;
+  cursor: pointer;
+  border-radius: 999px;
 }
-.tb-next:focus-visible {
+.tb-stepper__btn:first-child {
+  padding-right: 12px;
+}
+.tb-stepper__btn:last-child {
+  padding-left: 12px;
+}
+.tb-stepper__btn[hidden] {
+  display: none;
+}
+.tb-stepper__btn:hover {
+  background: rgba(0, 0, 0, 0.08);
+}
+.tb-stepper__btn:focus-visible {
   outline: 2px solid var(--tb-ink);
-  outline-offset: 2px;
+  outline-offset: -2px;
+}
+.tb-stepper__divider {
+  align-self: center;
+  width: 1px;
+  height: 16px;
+  background: rgba(0, 0, 0, 0.2);
+}
+.tb-stepper__divider[hidden] {
+  display: none;
 }

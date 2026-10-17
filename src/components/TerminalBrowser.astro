@@ -111,9 +111,15 @@ const CHANGED_MY_MIND = beliefs.map((belief) => [belief.before, belief.after]);
           <div id="tb-url" class="tb-browser__url">https://</div>
         </div>
         <div id="tb-page" class="tb-page"></div>
-        <button id="tb-next" class="tb-next" type="button">
-          Next <span id="tb-next-label"></span> <span aria-hidden="true">→</span>
-        </button>
+        <div id="tb-stepper" class="tb-stepper">
+          <button id="tb-prev" class="tb-stepper__btn" type="button" aria-label="Previous tab">
+            <span aria-hidden="true">←</span> <span id="tb-prev-label"></span>
+          </button>
+          <span id="tb-stepper-divider" class="tb-stepper__divider" aria-hidden="true"></span>
+          <button id="tb-next" class="tb-stepper__btn" type="button" aria-label="Next tab">
+            <span id="tb-next-label"></span> <span aria-hidden="true">→</span>
+          </button>
+        </div>
       </section>
     </div>
   </div>

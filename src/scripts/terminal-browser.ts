@@ -1,5 +1,5 @@
 // Engine for the terminal+browser hero. Reaches into IDs/classes from TerminalBrowser.astro.
-// Navigation is click/tap-only (tabs + Next); each tab's own content scrolls independently.
+// Navigation is click/tap-only (tabs + the prev/next stepper); each tab's own content scrolls independently.
 
 type TerminalBrowserData = {
   PROFILE: Record<string, string>;
@@ -125,6 +125,10 @@ export function initTerminalBrowser(data: TerminalBrowserData) {
     tabsEl = $('tb-tabs');
   const urlEl = $('tb-url'),
     pageEl = $('tb-page');
+  const stepperEl = $('tb-stepper'),
+    dividerEl = $('tb-stepper-divider');
+  const prevEl = $('tb-prev'),
+    prevLabelEl = $('tb-prev-label');
   const nextEl = $('tb-next'),
     nextLabelEl = $('tb-next-label');
 
@@ -164,10 +168,15 @@ export function initTerminalBrowser(data: TerminalBrowserData) {
     });
   }
 
-  function updateNextButton() {
-    const nextIdx = curIdx + 1 < SCENES.length ? curIdx + 1 : -1;
-    nextEl.classList.toggle('is-visible', phase === 'reveal' && nextIdx !== -1);
-    if (nextIdx !== -1) nextLabelEl.textContent = SCENES[nextIdx].tab;
+  function updateStepper() {
+    const hasPrev = curIdx > 0;
+    const hasNext = curIdx + 1 < SCENES.length;
+    stepperEl.classList.toggle('is-visible', phase === 'reveal' && (hasPrev || hasNext));
+    prevEl.hidden = !hasPrev;
+    nextEl.hidden = !hasNext;
+    dividerEl.hidden = !(hasPrev && hasNext);
+    if (hasPrev) prevLabelEl.textContent = SCENES[curIdx - 1].tab;
+    if (hasNext) nextLabelEl.textContent = SCENES[curIdx + 1].tab;
   }
 
   function applyReveal(pt: number) {
@@ -205,16 +214,17 @@ export function initTerminalBrowser(data: TerminalBrowserData) {
         typedEl.textContent = '';
         rebuildLog(true);
         pageEl.innerHTML = PAGES[scene.id]();
+        pageEl.scrollTop = 0;
         applyReveal(reduced ? 1 : 0);
       }
-      updateNextButton();
+      updateStepper();
       schedule();
       return;
     }
 
     const pt = reduced ? 1 : clamp((now - phaseStart) / REVEAL_MS);
     applyReveal(pt);
-    updateNextButton();
+    updateStepper();
     if (pt < 1) schedule();
   }
 
@@ -225,7 +235,7 @@ export function initTerminalBrowser(data: TerminalBrowserData) {
     phaseStart = performance.now();
     rebuildLog(false);
     updateTabs();
-    updateNextButton();
+    updateStepper();
     schedule();
   }
 
@@ -238,6 +248,9 @@ export function initTerminalBrowser(data: TerminalBrowserData) {
     tabsEl.appendChild(b);
   });
 
+  prevEl.addEventListener('click', () => {
+    if (curIdx > 0) goTo(curIdx - 1);
+  });
   nextEl.addEventListener('click', () => {
     if (curIdx + 1 < SCENES.length) goTo(curIdx + 1);
   });

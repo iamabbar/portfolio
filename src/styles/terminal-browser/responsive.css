@@ -32,13 +32,21 @@
     height: auto;
   }
   .tb-page {
-    padding: 20px 16px;
+    padding: 20px 16px 64px;
   }
-  .tb-next {
+  .tb-stepper {
     right: 12px;
     bottom: 12px;
+  }
+  .tb-stepper__btn {
     padding: 8px 12px;
     font-size: 12px;
+  }
+  .tb-stepper__btn:first-child {
+    padding-right: 8px;
+  }
+  .tb-stepper__btn:last-child {
+    padding-left: 8px;
   }
   .tb-avatar {
     width: 72px;
