@@ -249,9 +249,11 @@ export function initTerminalBrowser(data: TerminalBrowserData) {
   });
 
   prevEl.addEventListener('click', () => {
+    prevEl.blur();
     if (curIdx > 0) goTo(curIdx - 1);
   });
   nextEl.addEventListener('click', () => {
+    nextEl.blur();
     if (curIdx + 1 < SCENES.length) goTo(curIdx + 1);
   });
 
