@@ -1,4 +1,4 @@
-/* The browser mock's chrome: tab bar, address bar, progress bar, skeleton, Next nudge. */
+/* The browser mock's chrome: tab bar, address bar, prev/next stepper. */
 
 .tb-browser-wrap {
   flex: 0 1 900px;

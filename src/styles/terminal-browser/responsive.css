@@ -1,8 +1,6 @@
 /* Cross-cutting overrides spanning multiple files in this directory. */
 
-/* Triggers on narrow portrait phones AND short landscape ones — stacks the
-   terminal above the browser so the tab bar has room to breathe. The stage
-   still fills the viewport and .tb-page still scrolls on its own. */
+/* Narrow portrait phones and short landscape ones: stack the terminal above the browser. */
 @media (max-width: 820px), (max-height: 500px) {
   .tb-stage {
     height: 100vh;

@@ -148,7 +148,6 @@ export function initTerminalBrowser(data: TerminalBrowserData) {
     if (!raf) raf = requestAnimationFrame(render);
   }
 
-  // entries for every tab already opened, optionally including the current one
   function rebuildLog(includeCurrent: boolean) {
     const upTo = includeCurrent ? curIdx + 1 : curIdx;
     logEl.innerHTML = SCENES.slice(0, upTo)

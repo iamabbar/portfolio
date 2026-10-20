@@ -51,7 +51,6 @@
     var(--tb-bg);
 }
 
-/* ---------------- shared bits ---------------- */
 .tb-lights {
   display: flex;
   gap: 7px;
@@ -119,7 +118,6 @@
   animation: tb-blink 1s step-end infinite;
 }
 
-/* every revealed element eases between scroll steps */
 .tb-page [style*='opacity'] {
   transition:
     opacity 0.25s ease-out,

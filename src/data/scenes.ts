@@ -3,7 +3,6 @@ import { site } from './site';
 export type Scene = {
   /** Matches a key in the PAGES map in src/scripts/terminal-browser.ts. */
   id: string;
-  /** Label shown on the browser tab. */
   tab: string;
   /** Fake URL shown in the address bar — cosmetic, not a real route. */
   path: string;
